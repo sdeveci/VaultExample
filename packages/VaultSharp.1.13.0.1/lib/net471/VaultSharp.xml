@@ -1,0 +1,3240 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>VaultSharp</name>
+    </assembly>
+    <members>
+        <member name="T:VaultSharp.Core.IntegerToStringJsonConverter">
+            <summary>
+            System.Text.Json cannot handle int to string automatically.
+            This converter helps.
+            </summary>
+        </member>
+        <member name="T:VaultSharp.Core.VaultApiException">
+            <summary>
+            The vault client exception
+            </summary>
+        </member>
+        <member name="P:VaultSharp.Core.VaultApiException.StatusCode">
+            <summary>
+            The status code returned by Api.
+            </summary>
+        </member>
+        <member name="P:VaultSharp.Core.VaultApiException.HttpStatusCode">
+            <summary>
+            The http status code returned by Api.
+            </summary>
+        </member>
+        <member name="P:VaultSharp.Core.VaultApiException.ApiErrors">
+            <summary>
+            The list of api errors.
+            </summary>
+        </member>
+        <member name="P:VaultSharp.Core.VaultApiException.ApiWarnings">
+            <summary>
+            The list of api warnings.
+            </summary>
+        </member>
+        <member name="M:VaultSharp.Core.VaultApiException.#ctor">
+            <summary>
+            Default constructor.
+            </summary>
+        </member>
+        <member name="M:VaultSharp.Core.VaultApiException.#ctor(System.String)">
+            <summary>
+            Message constructor.
+            </summary>
+            <param name="message">Exception message.</param>
+        </member>
+        <member name="M:VaultSharp.Core.VaultApiException.#ctor(System.String,System.Exception)">
+            <summary>
+            Message constructor.
+            </summary>
+            <param name="message">Exception message.</param>
+            <param name="innerException">Inner exception</param>
+        </member>
+        <member name="M:VaultSharp.Core.VaultApiException.#ctor(System.Net.HttpStatusCode,System.String)">
+            <summary>
+            Status code based exception.
+            </summary>
+            <param name="httpStatusCode">Http status code.</param>
+            <param name="message">Exception message.</param>
+        </member>
+        <member name="T:VaultSharp.Core.BackendConfig">
+            <summary>
+            Represents the configuration values for a backend.
+            </summary>
+        </member>
+        <member name="P:VaultSharp.Core.BackendConfig.DefaultLeaseTtl">
+            <summary>
+            Gets or sets the default lease TTL.
+            A value of "0" means that the system defaults are used by this backend.
+            </summary>
+            <value>
+            The default lease TTL.
+            </value>
+        </member>
+        <member name="P:VaultSharp.Core.BackendConfig.ForceNoCache">
+            <summary>
+            Gets or sets the cache flag.
+            </summary>
+            <value>
+            The cache flag.
+            </value>
+        </member>
+        <member name="P:VaultSharp.Core.BackendConfig.MaximumLeaseTtl">
+            <summary>
+            Gets or sets the maximum lease TTL.
+            A value of "0" means that the system defaults are used by this backend.
+            </summary>
+            <value>
+            The maximum lease TTL.
+            </value>
+        </member>
+        <member name="T:VaultSharp.Core.BackendListingVisibility">
+            <summary>
+            Represents the BackendListingVisibility
+            </summary>
+        </member>
+        <member name="T:VaultSharp.Core.NewBackendConfig">
+            <summary>
+            Represents the configuration values for a backend.
+            </summary>
+        </member>
+        <member name="T:VaultSharp.IVaultClient">
+            <summary>
+            Provides an interface to interact with Vault as a client.
+            This is the only entry point for consuming the Vault Client.
+            </summary>
+        </member>
+        <member name="P:VaultSharp.IVaultClient.Settings">
+            <summary>
+            Gets the Vault Client Settings.
+            </summary>
+        </member>
+        <member name="P:VaultSharp.IVaultClient.V1">
+            <summary>
+            Gets the V1 Client interface for Vault Api.
+            </summary>
+        </member>
+        <member name="T:VaultSharp.V1.AuthMethods.AbstractAuthMethodInfo">
+            <summary>
+            Abstract class. You don't say.
+            </summary>
+        </member>
+        <member name="T:VaultSharp.V1.AuthMethods.AliCloud.AliCloudAuthMethodInfo">
+            <summary>
+            Represents the login information for the AliCloud Authentication backend.
+            </summary>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.AliCloud.AliCloudAuthMethodInfo.AuthMethodType">
+            <summary>
+            Gets the type of the authentication backend.
+            </summary>
+            <value>
+            The type of the authentication backend.
+            </value>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.AliCloud.AliCloudAuthMethodInfo.MountPoint">
+            <summary>
+            Gets the mount point.
+            Presence or absence of leading or trailing slashes don't matter.
+            </summary>
+            <value>
+            The mount point.
+            </value>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.AliCloud.AliCloudAuthMethodInfo.RoleName">
+            <summary>
+            [required]
+            Gets the name of the role against which the login is being attempted.
+            </summary>
+            <value>
+            The role name.
+            </value>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.AliCloud.AliCloudAuthMethodInfo.Base64EncodedIdentityRequestUrl">
+            <summary>
+            [required]
+            Gets the Base64-encoded HTTP URL used in the signed request.
+            </summary>
+            <value>
+            The base 64 encoded url.
+            </value>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.AliCloud.AliCloudAuthMethodInfo.Base64EncodedIdentityRequestHeaders">
+            <summary>
+            [required]
+            Gets the Base64-encoded, JSON-serialized representation of the sts:GetCallerIdentity HTTP request headers. 
+            The JSON serialization assumes that each header key maps to either a string value or an array of 
+            string values (though the length of that array will probably only be one).
+            </summary>
+            <value>
+            The base 64 encoded headers.
+            </value>
+        </member>
+        <member name="M:VaultSharp.V1.AuthMethods.AliCloud.AliCloudAuthMethodInfo.#ctor(System.String,System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:VaultSharp.V1.AuthMethods.AliCloud.AliCloudAuthMethodInfo"/> class.
+            </summary>
+            <param name="roleName">[required]
+            The name of the role against which the login is being attempted.
+            </param>
+            <param name="base64EncodedIdentityRequestUrl">
+            [required]
+            The Base64-encoded HTTP URL used in the signed request.
+            </param>
+            <param name="base64EncodedIdentityRequestHeaders">
+            [required]
+            The Base64-encoded, JSON-serialized representation of the sts:GetCallerIdentity HTTP request headers. 
+            The JSON serialization assumes that each header key maps to either a string value or an array of 
+            string values (though the length of that array will probably only be one).
+            </param>       
+        </member>
+        <member name="M:VaultSharp.V1.AuthMethods.AliCloud.AliCloudAuthMethodInfo.#ctor(System.String,System.String,System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:VaultSharp.V1.AuthMethods.AliCloud.AliCloudAuthMethodInfo"/> class.
+            </summary>
+            <param name="mountPoint">The mount point.</param>
+            <param name="roleName">[required]
+            The name of the role against which the login is being attempted.
+            </param>
+            <param name="base64EncodedIdentityRequestUrl">
+            [required]
+            The Base64-encoded HTTP URL used in the signed request.
+            </param>
+            <param name="base64EncodedIdentityRequestHeaders">
+            [required]
+            The Base64-encoded, JSON-serialized representation of the sts:GetCallerIdentity HTTP request headers. 
+            The JSON serialization assumes that each header key maps to either a string value or an array of 
+            string values (though the length of that array will probably only be one).
+            </param>  
+        </member>
+        <member name="T:VaultSharp.V1.AuthMethods.AliCloud.AliCloudAuthMethodProvider">
+            <summary>
+            Non login operations.
+            </summary>
+        </member>
+        <member name="T:VaultSharp.V1.AuthMethods.AliCloud.IAliCloudAuthMethod">
+            <summary>
+            Non login operations.
+            </summary>
+        </member>
+        <member name="M:VaultSharp.V1.AuthMethods.AliCloud.IAliCloudAuthMethod.WriteRoleAsync(System.String,VaultSharp.V1.AuthMethods.AliCloud.Models.CreateAliCloudRoleModel,System.String)">
+            <summary>
+            Registers a role. 
+            Only entities using the role registered using this endpoint will 
+            be able to perform the login operation.
+            </summary>
+            <param name="roleName"><para>[required]</para>
+            Specifies the name of the role to create. </param>
+            <param name="createAliCloudRoleModel"><para>[required]</para>
+            Specifies the request options. </param>
+            <param name="mountPoint"><para>[optional]</para>
+            The mount point for the Auth backend. Defaults to <see cref="F:VaultSharp.V1.AuthMethods.AuthMethodDefaultPaths.AliCloud" />
+            Provide a value only if you have customized the mount point.</param>        
+            <returns>The task</returns>
+        </member>
+        <member name="M:VaultSharp.V1.AuthMethods.AliCloud.IAliCloudAuthMethod.ReadRoleAsync(System.String,System.String)">
+            <summary>
+            Returns the previously registered role configuration.
+            </summary>
+            <param name="roleName"><para>[required]</para>
+            Specifies the name of the role</param>
+            <param name="mountPoint"><para>[optional]</para>
+            The mount point for the Auth backend. Defaults to <see cref="F:VaultSharp.V1.AuthMethods.AuthMethodDefaultPaths.AliCloud" />
+            Provide a value only if you have customized the mount point.
+            </param>        
+            <returns>The role details</returns>
+        </member>
+        <member name="M:VaultSharp.V1.AuthMethods.AliCloud.IAliCloudAuthMethod.ReadAllRolesAsync(System.String)">
+            <summary>
+            This endpoint returns a list of available roles. 
+            Only the role names are returned, not any values.
+            </summary>
+            <param name="mountPoint"><para>[optional]</para>
+            The mount point for the Auth backend. Defaults to <see cref="F:VaultSharp.V1.AuthMethods.AuthMethodDefaultPaths.AliCloud" />
+            Provide a value only if you have customized the mount point.
+            </param>  
+            <returns>The role names.</returns>
+        </member>
+        <member name="M:VaultSharp.V1.AuthMethods.AliCloud.IAliCloudAuthMethod.DeleteRoleAsync(System.String,System.String)">
+            <summary>
+            Deletes the previously registered role.
+            </summary>
+            <param name="roleName"><para>[required]</para>
+            Specifies the name of the role</param>
+            <param name="mountPoint"><para>[optional]</para>
+            The mount point for the Auth backend. Defaults to <see cref="F:VaultSharp.V1.AuthMethods.AuthMethodDefaultPaths.AliCloud" />
+            Provide a value only if you have customized the mount point.
+            </param>        
+            <returns>The task</returns>
+        </member>
+        <member name="T:VaultSharp.V1.AuthMethods.AppRole.AppRoleAuthMethodInfo">
+            <summary>
+            Represents the login information for the AppRole Authentication backend.
+            </summary>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.AppRole.AppRoleAuthMethodInfo.AuthMethodType">
+            <summary>
+            Gets the type of the authentication backend.
+            </summary>
+            <value>
+            The type of the authentication backend.
+            </value>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.AppRole.AppRoleAuthMethodInfo.MountPoint">
+            <summary>
+            Gets the mount point.
+            Presence or absence of leading or trailing slashes don't matter.
+            </summary>
+            <value>
+            The mount point.
+            </value>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.AppRole.AppRoleAuthMethodInfo.RoleId">
+            <summary>
+            Gets the role identifier.
+            RoleID is an identifier that selects the AppRole against which the other credentials are evaluated. 
+            When authenticating against this backend's login endpoint, the RoleID is a required argument 
+            at all times. By default, RoleIDs are unique UUIDs, which allow them to serve as secondary 
+            secrets to the other credential information. 
+            However, they can be set to particular values to match introspected information by the 
+            client (for instance, the client's domain name).
+            </summary>
+            <value>
+            The role identifier.
+            </value>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.AppRole.AppRoleAuthMethodInfo.SecretId">
+            <summary>
+            Gets the secret identifier.
+            SecretID is a credential that is required by default for any login and is intended to always be secret.
+            (For advanced usage, requiring a SecretID can be disabled via an AppRole's bind_secret_id parameter, 
+            allowing machines with only knowledge of the RoleID, or matching other set constraints, 
+            to fetch a token). 
+            SecretIDs can be created against an AppRole either via generation of a 
+            128-bit purely random UUID by the role itself (Pull mode) or via specific, 
+            custom values (Push mode). Similarly to tokens, SecretIDs have properties like usage-limit, 
+            TTLs and expirations.
+            </summary>
+            <value>
+            The secret identifier.
+            </value>
+        </member>
+        <member name="M:VaultSharp.V1.AuthMethods.AppRole.AppRoleAuthMethodInfo.#ctor(System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:VaultSharp.V1.AuthMethods.AppRole.AppRoleAuthMethodInfo"/> class.
+            </summary>
+            <param name="roleId">
+            The role identifier.
+            RoleID is an identifier that selects the AppRole against which the other credentials are evaluated. 
+            When authenticating against this backend's login endpoint, the RoleID is a required argument 
+            at all times. By default, RoleIDs are unique UUIDs, which allow them to serve as secondary 
+            secrets to the other credential information. 
+            However, they can be set to particular values to match introspected information by the 
+            client (for instance, the client's domain name).
+            </param>
+            <param name="secretId">
+            The secret identifier.
+            SecretID is a credential that is required by default for any login and is intended to always be secret.
+            (For advanced usage, requiring a SecretID can be disabled via an AppRole's bind_secret_id parameter, 
+            allowing machines with only knowledge of the RoleID, or matching other set constraints, 
+            to fetch a token). 
+            SecretIDs can be created against an AppRole either via generation of a 
+            128-bit purely random UUID by the role itself (Pull mode) or via specific, 
+            custom values (Push mode). Similarly to tokens, SecretIDs have properties like usage-limit, 
+            TTLs and expirations.
+            </param>
+        </member>
+        <member name="M:VaultSharp.V1.AuthMethods.AppRole.AppRoleAuthMethodInfo.#ctor(System.String,System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:VaultSharp.V1.AuthMethods.AppRole.AppRoleAuthMethodInfo"/> class.
+            </summary>
+            <param name="mountPoint">The mount point.</param>
+            <param name="roleId">
+            The role identifier.
+            RoleID is an identifier that selects the AppRole against which the other credentials are evaluated. 
+            When authenticating against this backend's login endpoint, the RoleID is a required argument 
+            at all times. By default, RoleIDs are unique UUIDs, which allow them to serve as secondary 
+            secrets to the other credential information. 
+            However, they can be set to particular values to match introspected information by the 
+            client (for instance, the client's domain name).
+            </param>
+            <param name="secretId">
+            The secret identifier.
+            SecretID is a credential that is required by default for any login and is intended to always be secret.
+            (For advanced usage, requiring a SecretID can be disabled via an AppRole's bind_secret_id parameter, 
+            allowing machines with only knowledge of the RoleID, or matching other set constraints, 
+            to fetch a token). 
+            SecretIDs can be created against an AppRole either via generation of a 
+            128-bit purely random UUID by the role itself (Pull mode) or via specific, 
+            custom values (Push mode). Similarly to tokens, SecretIDs have properties like usage-limit, 
+            TTLs and expirations.
+            </param>
+        </member>
+        <member name="T:VaultSharp.V1.AuthMethods.AppRole.IAppRoleAuthMethod">
+            <summary>
+            Non login operations.
+            </summary>
+        </member>
+        <member name="M:VaultSharp.V1.AuthMethods.AppRole.IAppRoleAuthMethod.ReadAllRolesAsync(System.String)">
+            <summary>
+            This endpoint returns a list of available roles. 
+            Only the role names are returned, not any values.
+            </summary>
+            <param name="mountPoint"><para>[optional]</para>
+            The mount point for the Auth backend. Defaults to <see cref="F:VaultSharp.V1.AuthMethods.AuthMethodDefaultPaths.AppRole" />
+            Provide a value only if you have customized the mount point.
+            </param>  
+            <returns>The role names.</returns>
+        </member>
+        <member name="M:VaultSharp.V1.AuthMethods.AppRole.IAppRoleAuthMethod.WriteRoleAsync(System.String,VaultSharp.V1.AuthMethods.AppRole.Models.AppRoleRoleModel,System.String)">
+            <summary>
+            Creates a new AppRole or updates an existing AppRole. 
+            This endpoint supports both create and update capabilities. 
+            There can be one or more constraints enabled on the role. 
+            It is required to have at least one of them enabled while creating or updating a role.
+            </summary>
+            <param name="roleName"><para>[required]</para>
+            Specifies the name of the role to create. </param>
+            <param name="appRoleRoleModel"><para>[required]</para>
+            Specifies the request options. </param>
+            <param name="mountPoint"><para>[optional]</para>
+            The mount point for the Auth backend. Defaults to <see cref="F:VaultSharp.V1.AuthMethods.AuthMethodDefaultPaths.AppRole" />
+            Provide a value only if you have customized the mount point.</param>        
+            <returns>The task</returns>
+        </member>
+        <member name="M:VaultSharp.V1.AuthMethods.AppRole.IAppRoleAuthMethod.ReadRoleAsync(System.String,System.String)">
+            <summary>
+            Reads the properties of an existing AppRole.
+            </summary>
+            <param name="roleName">Name of the Role.</param>
+            <param name="mountPoint">Mount point of the AppRole Auth method</param>
+            <returns>Metadata of Named AppRole</returns>
+        </member>
+        <member name="M:VaultSharp.V1.AuthMethods.AppRole.IAppRoleAuthMethod.DeleteRoleAsync(System.String,System.String)">
+            <summary>
+            Deletes an existing AppRole from the method.
+            </summary>
+            <param name="roleName"><para>[required]</para>
+            Specifies the name of the role</param>
+            <param name="mountPoint"><para>[optional]</para>
+            The mount point for the Auth backend. Defaults to <see cref="F:VaultSharp.V1.AuthMethods.AuthMethodDefaultPaths.AppRole" />
+            Provide a value only if you have customized the mount point.
+            </param>        
+            <returns>The task</returns>
+        </member>
+        <member name="M:VaultSharp.V1.AuthMethods.AppRole.IAppRoleAuthMethod.GetRoleIdAsync(System.String,System.String)">
+            <summary>
+            Reads the RoleID of an existing AppRole.
+            </summary>
+            <param name="roleName">Name of the Role.</param>
+            <param name="mountPoint">Mount point of the AppRole Auth method</param>
+            <returns>The task</returns>
+        </member>
+        <member name="M:VaultSharp.V1.AuthMethods.AppRole.IAppRoleAuthMethod.WriteRoleIdAsync(System.String,VaultSharp.V1.AuthMethods.AppRole.Models.RoleIdInfo,System.String)">
+            <summary>
+            Updates the RoleID of an existing AppRole to a custom value.
+            </summary>
+            <param name="roleName"><para>[required]</para>
+            Specifies the name of the role to create. </param>
+            <param name="roleIdInfo"><para>[required]</para>
+            Specifies the request options. </param>
+            <param name="mountPoint"><para>[optional]</para>
+            The mount point for the Auth backend. Defaults to <see cref="F:VaultSharp.V1.AuthMethods.AuthMethodDefaultPaths.AppRole" />
+            Provide a value only if you have customized the mount point.</param>        
+            <returns>The task</returns>
+        </member>
+        <member name="M:VaultSharp.V1.AuthMethods.AppRole.IAppRoleAuthMethod.PullNewSecretIdAsync(System.String,VaultSharp.V1.AuthMethods.AppRole.Models.PullSecretIdRequestOptions,System.String)">
+            <summary>
+            Generates and issues a new SecretID on an existing AppRole. 
+            Similar to tokens, the response will also contain a 
+            secret_id_accessor value which can be used to read the properties 
+            of the SecretID without divulging the SecretID itself, and also to 
+            delete the SecretID from the AppRole.
+            </summary>
+            <param name="roleName"><para>[required]</para>
+            Specifies the name of the role. </param>
+            <param name="secretIdRequestOptions"><para>[required]</para>
+            Specifies the request options. </param>
+            <param name="mountPoint"><para>[optional]</para>
+            The mount point for the Auth backend. Defaults to <see cref="F:VaultSharp.V1.AuthMethods.AuthMethodDefaultPaths.AppRole" />
+            Provide a value only if you have customized the mount point.</param>        
+            <returns>The secret id info</returns>
+        </member>
+        <member name="M:VaultSharp.V1.AuthMethods.AppRole.IAppRoleAuthMethod.ReadAllSecretIdAccessorsAsync(System.String,System.String)">
+            <summary>
+            Lists the accessors of all the SecretIDs issued against the AppRole. 
+            This includes the accessors for "custom" SecretIDs as well.
+            </summary>
+            <param name="roleName"><para>[required]</para>
+            Specifies the name of the role. </param>
+            <param name="mountPoint"><para>[optional]</para>
+            The mount point for the Auth backend. Defaults to <see cref="F:VaultSharp.V1.AuthMethods.AuthMethodDefaultPaths.AppRole" />
+            Provide a value only if you have customized the mount point.
+            </param>
+            <returns>The secret accessors.</returns>
+        </member>
+        <member name="M:VaultSharp.V1.AuthMethods.AppRole.IAppRoleAuthMethod.ReadSecretIdInfoAsync(System.String,System.String,System.String)">
+            <summary>
+            Reads out the properties of a SecretID.
+            </summary>
+            <param name="roleName">Name of the Role.</param>
+            <param name="secretId">The secret id.</param>
+            <param name="mountPoint">Mount point of the AppRole Auth method</param>
+            <returns>Secret Id properties</returns>
+        </member>
+        <member name="M:VaultSharp.V1.AuthMethods.AppRole.IAppRoleAuthMethod.DestroySecretIdAsync(System.String,System.String,System.String)">
+            <summary>
+            Destroy an AppRole secret ID.
+            </summary>
+            <param name="roleName">Name of the Role.</param>
+            <param name="secretId">The secret id.</param>
+            <param name="mountPoint">Mount point of the AppRole Auth method</param>
+            <returns>The task</returns>
+        </member>
+        <member name="M:VaultSharp.V1.AuthMethods.AppRole.IAppRoleAuthMethod.ReadSecretIdInfoByAccessorAsync(System.String,System.String,System.String)">
+            <summary>
+            Reads out the properties of a SecretID by accessor.
+            </summary>
+            <param name="roleName">Name of the Role.</param>
+            <param name="secretIdAccessor">The secret id accessor.</param>
+            <param name="mountPoint">Mount point of the AppRole Auth method</param>
+            <returns>Secret Id properties</returns>
+        </member>
+        <member name="M:VaultSharp.V1.AuthMethods.AppRole.IAppRoleAuthMethod.DestroySecretIdByAccessorAsync(System.String,System.String,System.String)">
+            <summary>
+            Destroy an AppRole secret id by Accessor.
+            </summary>
+            <param name="roleName">Name of the Role.</param>
+            <param name="secretIdAccessor">The secret id accessor.</param>
+            <param name="mountPoint">Mount point of the AppRole Auth method</param>
+            <returns>The task</returns>
+        </member>
+        <member name="M:VaultSharp.V1.AuthMethods.AppRole.IAppRoleAuthMethod.PushNewSecretIdAsync(System.String,VaultSharp.V1.AuthMethods.AppRole.Models.PushSecretIdRequestOptions,System.String)">
+            <summary>
+            Assigns a "custom" SecretID against an existing AppRole. 
+            This is used in the "Push" model of operation.
+            </summary>
+            <param name="roleName"><para>[required]</para>
+            Specifies the name of the role. </param>
+            <param name="secretIdRequestOptions"><para>[required]</para>
+            Specifies the request options. </param>
+            <param name="mountPoint"><para>[optional]</para>
+            The mount point for the Auth backend. Defaults to <see cref="F:VaultSharp.V1.AuthMethods.AuthMethodDefaultPaths.AppRole" />
+            Provide a value only if you have customized the mount point.</param>        
+            <returns>The secret id info</returns>
+        </member>
+        <member name="M:VaultSharp.V1.AuthMethods.AppRole.IAppRoleAuthMethod.ReadRolePoliciesAsync(System.String,System.String)">
+            <summary>
+            Gets the policies attribute of the Role entity.
+            </summary>
+            <param name="roleName"><para>[required]</para>
+            Specifies the name of the role. </param>
+            <param name="mountPoint"><para>[optional]</para>
+            The mount point for the Auth backend. Defaults to <see cref="F:VaultSharp.V1.AuthMethods.AuthMethodDefaultPaths.AppRole" />
+            Provide a value only if you have customized the mount point.</param>        
+            <returns>The policy value.</returns>
+        </member>
+        <member name="M:VaultSharp.V1.AuthMethods.AppRole.IAppRoleAuthMethod.WriteRolePoliciesAsync(System.String,VaultSharp.V1.AuthMethods.AppRole.Models.AppRolePoliciesModel,System.String)">
+            <summary>
+            Updates the policy attribute of the Role entity
+            </summary>
+            <param name="roleName"><para>[required]</para>
+            Specifies the name of the role. </param>
+            <param name="policies">The policy to write.</param>
+            <param name="mountPoint"><para>[optional]</para>
+            The mount point for the Auth backend. Defaults to <see cref="F:VaultSharp.V1.AuthMethods.AuthMethodDefaultPaths.AppRole" />
+            Provide a value only if you have customized the mount point.</param> 
+        </member>
+        <member name="M:VaultSharp.V1.AuthMethods.AppRole.IAppRoleAuthMethod.DeleteRolePoliciesAsync(System.String,System.String)">
+            <summary>
+            Deletes the policy attribute of the Role entity
+            </summary>
+            <param name="roleName"><para>[required]</para>
+            Specifies the name of the role. </param>
+            <param name="mountPoint"><para>[optional]</para>
+            The mount point for the Auth backend. Defaults to <see cref="F:VaultSharp.V1.AuthMethods.AuthMethodDefaultPaths.AppRole" />
+            Provide a value only if you have customized the mount point.</param> 
+        </member>
+        <member name="M:VaultSharp.V1.AuthMethods.AppRole.IAppRoleAuthMethod.ReadRoleSecretIdNumberOfUsesAsync(System.String,System.String)">
+            <summary>
+            Gets the secret-id-num-uses attribute of the Role entity.
+            </summary>
+            <param name="roleName"><para>[required]</para>
+            Specifies the name of the role. </param>
+            <param name="mountPoint"><para>[optional]</para>
+            The mount point for the Auth backend. Defaults to <see cref="F:VaultSharp.V1.AuthMethods.AuthMethodDefaultPaths.AppRole" />
+            Provide a value only if you have customized the mount point.</param>        
+            <returns>The policy value.</returns>
+        </member>
+        <member name="M:VaultSharp.V1.AuthMethods.AppRole.IAppRoleAuthMethod.WriteRoleSecretIdNumberOfUsesAsync(System.String,System.Int64,System.String)">
+            <summary>
+            Updates the secret-id-num-uses attribute of the Role entity
+            </summary>
+            <param name="roleName"><para>[required]</para>
+            Specifies the name of the role. </param>
+            <param name="secretIdNumberOfUses">The policy to write.</param>
+            <param name="mountPoint"><para>[optional]</para>
+            The mount point for the Auth backend. Defaults to <see cref="F:VaultSharp.V1.AuthMethods.AuthMethodDefaultPaths.AppRole" />
+            Provide a value only if you have customized the mount point.</param> 
+        </member>
+        <member name="M:VaultSharp.V1.AuthMethods.AppRole.IAppRoleAuthMethod.DeleteRoleSecretIdNumberOfUsesAsync(System.String,System.String)">
+            <summary>
+            Deletes the secret-id-num-uses attribute of the Role entity
+            </summary>
+            <param name="roleName"><para>[required]</para>
+            Specifies the name of the role. </param>
+            <param name="mountPoint"><para>[optional]</para>
+            The mount point for the Auth backend. Defaults to <see cref="F:VaultSharp.V1.AuthMethods.AuthMethodDefaultPaths.AppRole" />
+            Provide a value only if you have customized the mount point.</param> 
+        </member>
+        <member name="M:VaultSharp.V1.AuthMethods.AppRole.IAppRoleAuthMethod.ReadRoleSecretIdTimeToLiveAsync(System.String,System.String)">
+            <summary>
+            Gets the secret-id-ttl attribute of the Role entity.
+            </summary>
+            <param name="roleName"><para>[required]</para>
+            Specifies the name of the role. </param>
+            <param name="mountPoint"><para>[optional]</para>
+            The mount point for the Auth backend. Defaults to <see cref="F:VaultSharp.V1.AuthMethods.AuthMethodDefaultPaths.AppRole" />
+            Provide a value only if you have customized the mount point.</param>        
+            <returns>The secret-id-ttl value.</returns>
+        </member>
+        <member name="M:VaultSharp.V1.AuthMethods.AppRole.IAppRoleAuthMethod.WriteRoleSecretIdTimeToLiveAsync(System.String,System.Int64,System.String)">
+            <summary>
+            Updates the secret-id-ttl attribute of the Role entity
+            </summary>
+            <param name="roleName"><para>[required]</para>
+            Specifies the name of the role. </param>
+            <param name="secretIdTimeToLive">The secret-id-ttl to write.</param>
+            <param name="mountPoint"><para>[optional]</para>
+            The mount point for the Auth backend. Defaults to <see cref="F:VaultSharp.V1.AuthMethods.AuthMethodDefaultPaths.AppRole" />
+            Provide a value only if you have customized the mount point.</param> 
+        </member>
+        <member name="M:VaultSharp.V1.AuthMethods.AppRole.IAppRoleAuthMethod.DeleteRoleSecretIdTimeToLiveAsync(System.String,System.String)">
+            <summary>
+            Deletes the secret-id-ttl attribute of the Role entity
+            </summary>
+            <param name="roleName"><para>[required]</para>
+            Specifies the name of the role. </param>
+            <param name="mountPoint"><para>[optional]</para>
+            The mount point for the Auth backend. Defaults to <see cref="F:VaultSharp.V1.AuthMethods.AuthMethodDefaultPaths.AppRole" />
+            Provide a value only if you have customized the mount point.</param> 
+        </member>
+        <member name="M:VaultSharp.V1.AuthMethods.AppRole.IAppRoleAuthMethod.ReadRoleTokenTimeToLiveAsync(System.String,System.String)">
+            <summary>
+            Gets the token-ttl attribute of the Role entity.
+            </summary>
+            <param name="roleName"><para>[required]</para>
+            Specifies the name of the role. </param>
+            <param name="mountPoint"><para>[optional]</para>
+            The mount point for the Auth backend. Defaults to <see cref="F:VaultSharp.V1.AuthMethods.AuthMethodDefaultPaths.AppRole" />
+            Provide a value only if you have customized the mount point.</param>        
+            <returns>The token-ttl value.</returns>
+        </member>
+        <member name="M:VaultSharp.V1.AuthMethods.AppRole.IAppRoleAuthMethod.WriteRoleTokenTimeToLiveAsync(System.String,System.Int64,System.String)">
+            <summary>
+            Updates the token-ttl attribute of the Role entity
+            </summary>
+            <param name="roleName"><para>[required]</para>
+            Specifies the name of the role. </param>
+            <param name="tokenTimeToLive">The token-ttl to write.</param>
+            <param name="mountPoint"><para>[optional]</para>
+            The mount point for the Auth backend. Defaults to <see cref="F:VaultSharp.V1.AuthMethods.AuthMethodDefaultPaths.AppRole" />
+            Provide a value only if you have customized the mount point.</param> 
+        </member>
+        <member name="M:VaultSharp.V1.AuthMethods.AppRole.IAppRoleAuthMethod.DeleteRoleTokenTimeToLiveAsync(System.String,System.String)">
+            <summary>
+            Deletes the token-ttl attribute of the Role entity
+            </summary>
+            <param name="roleName"><para>[required]</para>
+            Specifies the name of the role. </param>
+            <param name="mountPoint"><para>[optional]</para>
+            The mount point for the Auth backend. Defaults to <see cref="F:VaultSharp.V1.AuthMethods.AuthMethodDefaultPaths.AppRole" />
+            Provide a value only if you have customized the mount point.</param> 
+        </member>
+        <member name="M:VaultSharp.V1.AuthMethods.AppRole.IAppRoleAuthMethod.ReadRoleTokenMaximumTimeToLiveAsync(System.String,System.String)">
+            <summary>
+            Gets the token-max-ttl attribute of the Role entity.
+            </summary>
+            <param name="roleName"><para>[required]</para>
+            Specifies the name of the role. </param>
+            <param name="mountPoint"><para>[optional]</para>
+            The mount point for the Auth backend. Defaults to <see cref="F:VaultSharp.V1.AuthMethods.AuthMethodDefaultPaths.AppRole" />
+            Provide a value only if you have customized the mount point.</param>        
+            <returns>The token-max-ttl value.</returns>
+        </member>
+        <member name="M:VaultSharp.V1.AuthMethods.AppRole.IAppRoleAuthMethod.WriteRoleTokenMaximumTimeToLiveAsync(System.String,System.Int64,System.String)">
+            <summary>
+            Updates the token-max-ttl attribute of the Role entity
+            </summary>
+            <param name="roleName"><para>[required]</para>
+            Specifies the name of the role. </param>
+            <param name="tokenMaximumTimeToLive">The token-max-ttl to write.</param>
+            <param name="mountPoint"><para>[optional]</para>
+            The mount point for the Auth backend. Defaults to <see cref="F:VaultSharp.V1.AuthMethods.AuthMethodDefaultPaths.AppRole" />
+            Provide a value only if you have customized the mount point.</param> 
+        </member>
+        <member name="M:VaultSharp.V1.AuthMethods.AppRole.IAppRoleAuthMethod.DeleteRoleTokenMaximumTimeToLiveAsync(System.String,System.String)">
+            <summary>
+            Deletes the token-max-ttl attribute of the Role entity
+            </summary>
+            <param name="roleName"><para>[required]</para>
+            Specifies the name of the role. </param>
+            <param name="mountPoint"><para>[optional]</para>
+            The mount point for the Auth backend. Defaults to <see cref="F:VaultSharp.V1.AuthMethods.AuthMethodDefaultPaths.AppRole" />
+            Provide a value only if you have customized the mount point.</param> 
+        </member>
+        <member name="M:VaultSharp.V1.AuthMethods.AppRole.IAppRoleAuthMethod.ReadRoleBindSecretIdAsync(System.String,System.String)">
+            <summary>
+            Gets the bind-secret-id attribute of the Role entity.
+            </summary>
+            <param name="roleName"><para>[required]</para>
+            Specifies the name of the role. </param>
+            <param name="mountPoint"><para>[optional]</para>
+            The mount point for the Auth backend. Defaults to <see cref="F:VaultSharp.V1.AuthMethods.AuthMethodDefaultPaths.AppRole" />
+            Provide a value only if you have customized the mount point.</param>        
+            <returns>The bind-secret-id value.</returns>
+        </member>
+        <member name="M:VaultSharp.V1.AuthMethods.AppRole.IAppRoleAuthMethod.WriteRoleBindSecretIdAsync(System.String,System.Boolean,System.String)">
+            <summary>
+            Updates the bind-secret-id attribute of the Role entity
+            </summary>
+            <param name="roleName"><para>[required]</para>
+            Specifies the name of the role. </param>
+            <param name="bindSecretId">The bind-secret-id to write.</param>
+            <param name="mountPoint"><para>[optional]</para>
+            The mount point for the Auth backend. Defaults to <see cref="F:VaultSharp.V1.AuthMethods.AuthMethodDefaultPaths.AppRole" />
+            Provide a value only if you have customized the mount point.</param> 
+        </member>
+        <member name="M:VaultSharp.V1.AuthMethods.AppRole.IAppRoleAuthMethod.DeleteRoleBindSecretIdAsync(System.String,System.String)">
+            <summary>
+            Deletes the bind-secret-id attribute of the Role entity
+            </summary>
+            <param name="roleName"><para>[required]</para>
+            Specifies the name of the role. </param>
+            <param name="mountPoint"><para>[optional]</para>
+            The mount point for the Auth backend. Defaults to <see cref="F:VaultSharp.V1.AuthMethods.AuthMethodDefaultPaths.AppRole" />
+            Provide a value only if you have customized the mount point.</param> 
+        </member>
+        <member name="M:VaultSharp.V1.AuthMethods.AppRole.IAppRoleAuthMethod.ReadRoleSecretIdBoundCIDRsAsync(System.String,System.String)">
+            <summary>
+            Gets the secret-id-bound-cidrs attribute of the Role entity.
+            </summary>
+            <param name="roleName"><para>[required]</para>
+            Specifies the name of the role. </param>
+            <param name="mountPoint"><para>[optional]</para>
+            The mount point for the Auth backend. Defaults to <see cref="F:VaultSharp.V1.AuthMethods.AuthMethodDefaultPaths.AppRole" />
+            Provide a value only if you have customized the mount point.</param>        
+            <returns>The secret-id-bound-cidrs value.</returns>
+        </member>
+        <member name="M:VaultSharp.V1.AuthMethods.AppRole.IAppRoleAuthMethod.WriteRoleSecretIdBoundCIDRsAsync(System.String,System.Collections.Generic.List{System.String},System.String)">
+            <summary>
+            Updates the secret-id-bound-cidrs attribute of the Role entity
+            </summary>
+            <param name="roleName"><para>[required]</para>
+            Specifies the name of the role. </param>
+            <param name="secretIdBoundCIDRs">The secret-id-bound-cidrs to write.</param>
+            <param name="mountPoint"><para>[optional]</para>
+            The mount point for the Auth backend. Defaults to <see cref="F:VaultSharp.V1.AuthMethods.AuthMethodDefaultPaths.AppRole" />
+            Provide a value only if you have customized the mount point.</param> 
+        </member>
+        <member name="M:VaultSharp.V1.AuthMethods.AppRole.IAppRoleAuthMethod.DeleteRoleSecretIdBoundCIDRsAsync(System.String,System.String)">
+            <summary>
+            Deletes the secret-id-bound-cidrs attribute of the Role entity
+            </summary>
+            <param name="roleName"><para>[required]</para>
+            Specifies the name of the role. </param>
+            <param name="mountPoint"><para>[optional]</para>
+            The mount point for the Auth backend. Defaults to <see cref="F:VaultSharp.V1.AuthMethods.AuthMethodDefaultPaths.AppRole" />
+            Provide a value only if you have customized the mount point.</param> 
+        </member>
+        <member name="M:VaultSharp.V1.AuthMethods.AppRole.IAppRoleAuthMethod.ReadRoleTokenBoundCIDRsAsync(System.String,System.String)">
+            <summary>
+            Gets the token-bound-cidrs attribute of the Role entity.
+            </summary>
+            <param name="roleName"><para>[required]</para>
+            Specifies the name of the role. </param>
+            <param name="mountPoint"><para>[optional]</para>
+            The mount point for the Auth backend. Defaults to <see cref="F:VaultSharp.V1.AuthMethods.AuthMethodDefaultPaths.AppRole" />
+            Provide a value only if you have customized the mount point.</param>        
+            <returns>The token-bound-cidrs value.</returns>
+        </member>
+        <member name="M:VaultSharp.V1.AuthMethods.AppRole.IAppRoleAuthMethod.WriteRoleTokenBoundCIDRsAsync(System.String,System.Collections.Generic.List{System.String},System.String)">
+            <summary>
+            Updates the token-bound-cidrs attribute of the Role entity
+            </summary>
+            <param name="roleName"><para>[required]</para>
+            Specifies the name of the role. </param>
+            <param name="tokenBoundCIDRs">The token-bound-cidrs to write.</param>
+            <param name="mountPoint"><para>[optional]</para>
+            The mount point for the Auth backend. Defaults to <see cref="F:VaultSharp.V1.AuthMethods.AuthMethodDefaultPaths.AppRole" />
+            Provide a value only if you have customized the mount point.</param> 
+        </member>
+        <member name="M:VaultSharp.V1.AuthMethods.AppRole.IAppRoleAuthMethod.DeleteRoleTokenBoundCIDRsAsync(System.String,System.String)">
+            <summary>
+            Deletes the token-bound-cidrs attribute of the Role entity
+            </summary>
+            <param name="roleName"><para>[required]</para>
+            Specifies the name of the role. </param>
+            <param name="mountPoint"><para>[optional]</para>
+            The mount point for the Auth backend. Defaults to <see cref="F:VaultSharp.V1.AuthMethods.AuthMethodDefaultPaths.AppRole" />
+            Provide a value only if you have customized the mount point.</param> 
+        </member>
+        <member name="M:VaultSharp.V1.AuthMethods.AppRole.IAppRoleAuthMethod.ReadRolePeriodAsync(System.String,System.String)">
+            <summary>
+            Gets the period attribute of the Role entity.
+            </summary>
+            <param name="roleName"><para>[required]</para>
+            Specifies the name of the role. </param>
+            <param name="mountPoint"><para>[optional]</para>
+            The mount point for the Auth backend. Defaults to <see cref="F:VaultSharp.V1.AuthMethods.AuthMethodDefaultPaths.AppRole" />
+            Provide a value only if you have customized the mount point.</param>        
+            <returns>The period value.</returns>
+        </member>
+        <member name="M:VaultSharp.V1.AuthMethods.AppRole.IAppRoleAuthMethod.WriteRolePeriodAsync(System.String,System.Int64,System.String)">
+            <summary>
+            Updates the period attribute of the Role entity
+            </summary>
+            <param name="roleName"><para>[required]</para>
+            Specifies the name of the role. </param>
+            <param name="period">The period to write.</param>
+            <param name="mountPoint"><para>[optional]</para>
+            The mount point for the Auth backend. Defaults to <see cref="F:VaultSharp.V1.AuthMethods.AuthMethodDefaultPaths.AppRole" />
+            Provide a value only if you have customized the mount point.</param> 
+        </member>
+        <member name="M:VaultSharp.V1.AuthMethods.AppRole.IAppRoleAuthMethod.DeleteRolePeriodAsync(System.String,System.String)">
+            <summary>
+            Deletes the period attribute of the Role entity
+            </summary>
+            <param name="roleName"><para>[required]</para>
+            Specifies the name of the role. </param>
+            <param name="mountPoint"><para>[optional]</para>
+            The mount point for the Auth backend. Defaults to <see cref="F:VaultSharp.V1.AuthMethods.AuthMethodDefaultPaths.AppRole" />
+            Provide a value only if you have customized the mount point.</param> 
+        </member>
+        <member name="M:VaultSharp.V1.AuthMethods.AppRole.IAppRoleAuthMethod.TidyTokensAsync(System.String)">
+            <summary>
+            Performs some maintenance tasks to clean up invalid entries that may remain in the token store.
+            Generally, running this is not needed unless upgrade notes or support personnel suggest it. 
+            This may perform a lot of I/O to the storage method so should be used sparingly.
+            </summary>
+            <param name="mountPoint"><para>[optional]</para>
+            The mount point for the Auth backend. Defaults to <see cref="F:VaultSharp.V1.AuthMethods.AuthMethodDefaultPaths.AppRole" />
+            Provide a value only if you have customized the mount point.</param> 
+            <returns>The secret with warning message.</returns>
+        </member>
+        <member name="M:VaultSharp.V1.AuthMethods.AppRole.IAppRoleAuthMethod.LoginAsync(VaultSharp.V1.AuthMethods.AppRole.AppRoleAuthMethodInfo)">
+            <summary>
+            Useful to generate the login token as an explicit api.
+            Unauthenticated API.
+            </summary>
+            <param name="appRoleAuthMethodInfo">The request object</param>
+            <returns>The secret with the login token</returns>
+        </member>
+        <member name="T:VaultSharp.V1.AuthMethods.AppRole.Models.PullSecretIdRequestOptions">
+            <summary>
+            https://developer.hashicorp.com/vault/api-docs/auth/approle#generate-new-secret-id
+            </summary>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.AppRole.Models.PullSecretIdRequestOptions.Metadata">
+            <summary>
+            Metadata to be tied to the SecretID. 
+            This should be a JSON-formatted string containing the metadata in 
+            key-value pairs. This metadata will be set on tokens issued with 
+            this SecretID, and is logged in audit logs in plaintext.
+            </summary>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.AppRole.Models.PullSecretIdRequestOptions.CIDRList">
+            <summary>
+            Comma separated string or list of CIDR blocks enforcing secret IDs 
+            to be used from specific set of IP addresses. If 
+            secret_id_bound_cidrs is set on the role, then the list of CIDR 
+            blocks listed here should be a subset of the CIDR blocks listed on
+            the role.
+            </summary>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.AppRole.Models.PullSecretIdRequestOptions.TokenBoundCIDRs">
+            <summary>
+            Comma-separated string or list of CIDR blocks; if set, specifies 
+            blocks of IP addresses which can use the auth tokens generated by 
+            this SecretID. Overrides any role-set value but must be a subset.
+            </summary>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.AppRole.Models.PullSecretIdRequestOptions.NumberOfUses">
+            <summary>
+            Number of times this SecretID can be used, after which the SecretID
+            expires. A value of zero will allow unlimited uses. Overrides 
+            secret_id_num_uses role option when supplied. May not be higher 
+            than role's secret_id_num_uses.
+            </summary>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.AppRole.Models.PullSecretIdRequestOptions.TimeToLive">
+            <summary>
+            Duration in seconds (3600) or an integer time unit (60m) after 
+            which this SecretID expires. A value of zero will allow the 
+            SecretID to not expire. Overrides secret_id_ttl role option when 
+            supplied. May not be longer than role's secret_id_ttl.
+            </summary>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.AppRole.Models.PushSecretIdRequestOptions.SecretId">
+            <summary>
+            SecretID to be attached to the Role.
+            </summary>
+        </member>
+        <member name="T:VaultSharp.V1.AuthMethods.AppRole.Models.RoleIdInfo">
+            <summary>
+            https://developer.hashicorp.com/vault/api-docs/auth/approle#read-approle-role-id
+            </summary>
+        </member>
+        <member name="T:VaultSharp.V1.AuthMethods.AppRole.Models.SecretIdInfo">
+            <summary>
+            https://developer.hashicorp.com/vault/api-docs/auth/approle#generate-new-secret-id
+            </summary>
+        </member>
+        <member name="T:VaultSharp.V1.AuthMethods.AuthMethod">
+            <summary>
+            Represents an auth method.
+            </summary>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.AuthMethod.Type">
+            <summary>
+            Gets or sets the type of the backend.
+            </summary>
+            <value>
+            The type of the backend.
+            </value>
+        </member>
+        <member name="T:VaultSharp.V1.AuthMethods.AuthMethodType">
+            <summary>
+            A helper class for retrieving and comparing Authentication Backend types.
+            </summary>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.AuthMethodType.AliCloud">
+            <summary>
+            Gets the ali cloud.
+            </summary>
+            <value>
+            The ali cloud.
+            </value>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.AuthMethodType.AppRole">
+            <summary>
+            Gets the application role.
+            </summary>
+            <value>
+            The application role.
+            </value>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.AuthMethodType.AWS">
+            <summary>
+            Gets the aws type.
+            </summary>
+            <value>
+            The aws type.
+            </value>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.AuthMethodType.Azure">
+            <summary>
+            Gets the aws type.
+            </summary>
+            <value>
+            The aws type.
+            </value>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.AuthMethodType.GitHub">
+            <summary>
+            Gets the git hub type.
+            </summary>
+            <value>
+            The git hub.
+            </value>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.AuthMethodType.GoogleCloud">
+            <summary>
+            Gets the GoogleCloud type.
+            </summary>
+            <value>
+            The GoogleCloud.
+            </value>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.AuthMethodType.JWT">
+            <summary>
+            Gets the JWT type.
+            </summary>
+            <value>
+            The JWT.
+            </value>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.AuthMethodType.Kubernetes">
+            <summary>
+            Gets the Kubernetes type.
+            </summary>
+            <value>
+            The Kubernetes.
+            </value>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.AuthMethodType.LDAP">
+            <summary>
+            Gets the LDAP type.
+            </summary>
+            <value>
+            The LDAP.
+            </value>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.AuthMethodType.Kerberos">
+            <summary>
+            Gets the Kerberos type.
+            </summary>
+            <value>
+            The Kerberos.
+            </value>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.AuthMethodType.OCI">
+            <summary>
+            Gets the OCI type.
+            </summary>
+            <value>
+            The Okta.
+            </value>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.AuthMethodType.Okta">
+            <summary>
+            Gets the Okta type.
+            </summary>
+            <value>
+            The Okta.
+            </value>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.AuthMethodType.RADIUS">
+            <summary>
+            Gets the RADIUS type.
+            </summary>
+            <value>
+            The RADIUS.
+            </value>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.AuthMethodType.Cert">
+            <summary>
+            Gets the certificate type.
+            </summary>
+            <value>
+            The certificate.
+            </value>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.AuthMethodType.Token">
+            <summary>
+            Gets the token type.
+            </summary>
+            <value>
+            The token.
+            </value>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.AuthMethodType.UserPass">
+            <summary>
+            Gets the generic type.
+            </summary>
+            <value>
+            The generic.
+            </value>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.AuthMethodType.CloudFoundry">
+            <summary>
+            Gets the Cloud Foundry type.
+            </summary>
+            <value>
+            The Cloud Foundry.
+            </value>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.AuthMethodType.Type">
+            <summary>
+            Gets the type type.
+            </summary>
+            <value>
+            The type.
+            </value>
+        </member>
+        <member name="M:VaultSharp.V1.AuthMethods.AuthMethodType.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:VaultSharp.V1.AuthMethods.AuthMethodType" /> class.
+            </summary>
+            <param name="type">The type.</param>
+        </member>
+        <member name="M:VaultSharp.V1.AuthMethods.AuthMethodType.op_Equality(VaultSharp.V1.AuthMethods.AuthMethodType,VaultSharp.V1.AuthMethods.AuthMethodType)">
+            <summary>
+            Implements the operator ==.
+            </summary>
+            <param name="left">The left.</param>
+            <param name="right">The right.</param>
+            <returns>
+            The result of the operator.
+            </returns>
+        </member>
+        <member name="M:VaultSharp.V1.AuthMethods.AuthMethodType.op_Inequality(VaultSharp.V1.AuthMethods.AuthMethodType,VaultSharp.V1.AuthMethods.AuthMethodType)">
+            <summary>
+            Implements the operator !=.
+            </summary>
+            <param name="left">The left.</param>
+            <param name="right">The right.</param>
+            <returns>
+            The result of the operator.
+            </returns>
+        </member>
+        <member name="M:VaultSharp.V1.AuthMethods.AuthMethodType.Equals(VaultSharp.V1.AuthMethods.AuthMethodType)">
+            <summary>
+            Indicates whether the current object is equal to another object of the same type.
+            </summary>
+            <param name="other">An object to compare with this object.</param>
+            <returns>
+            true if the current object is equal to the <paramref name="other" /> parameter; otherwise, false.
+            </returns>
+        </member>
+        <member name="M:VaultSharp.V1.AuthMethods.AuthMethodType.Equals(System.Object)">
+            <summary>
+            Determines whether the specified <see cref="T:System.Object" />, is equal to this instance.
+            </summary>
+            <param name="obj">The <see cref="T:System.Object" /> to compare with this instance.</param>
+            <returns>
+              <c>true</c> if the specified <see cref="T:System.Object" /> is equal to this instance; otherwise, <c>false</c>.
+            </returns>
+        </member>
+        <member name="M:VaultSharp.V1.AuthMethods.AuthMethodType.GetHashCode">
+            <summary>
+            Returns a hash code for this instance.
+            </summary>
+            <returns>
+            A hash code for this instance, suitable for use in hashing algorithms and data structures like a hash table.
+            </returns>
+        </member>
+        <member name="M:VaultSharp.V1.AuthMethods.AuthMethodType.ToString">
+            <summary>
+            Returns a <see cref="T:System.String" /> that represents this instance.
+            </summary>
+            <returns>
+            A <see cref="T:System.String" /> that represents this instance.
+            </returns>
+        </member>
+        <member name="T:VaultSharp.V1.AuthMethods.AuthMethodTypeJsonConverter">
+            <summary>
+            Converts the <see cref="T:VaultSharp.V1.AuthMethods.AuthMethodType" /> object to and from JSON.
+            </summary>
+        </member>
+        <member name="T:VaultSharp.V1.AuthMethods.AWS.AbstractAWSAuthMethodInfo">
+            <summary>
+            Represents the login information for the AWS Authentication backend.
+            </summary>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.AWS.AbstractAWSAuthMethodInfo.AWSAuthMethodType">
+            <summary>
+            Gets the AWS Auth method type.
+            </summary>
+            <value>
+            The AWS auth type.
+            </value>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.AWS.AbstractAWSAuthMethodInfo.AuthMethodType">
+            <summary>
+            Gets the type of the authentication backend.
+            </summary>
+            <value>
+            The type of the authentication backend.
+            </value>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.AWS.AbstractAWSAuthMethodInfo.MountPoint">
+            <summary>
+            Gets the mount point.
+            Presence or absence of leading or trailing slashes don't matter.
+            </summary>
+            <value>
+            The mount point.
+            </value>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.AWS.AbstractAWSAuthMethodInfo.RoleName">
+            <summary>
+            Gets the name of the role against which the login is being attempted. 
+            If role is not specified, then the login endpoint looks for a role bearing 
+            the name of the AMI ID of the EC2 instance that is trying to login
+            if using the ec2 auth method, or the "friendly name" (i.e., role name or username) 
+            of the IAM principal authenticated.. 
+            If a matching role is not found, login fails.
+            </summary>
+            <value>
+            The role name.
+            </value>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.AWS.AbstractAWSAuthMethodInfo.Nonce">
+            <summary>
+            Gets the nonce to be used for subsequent login requests. 
+            If this parameter is not specified at all and if reauthentication is allowed, 
+            then the method will generate a random nonce, attaches it to the instance's identity-accesslist 
+            entry and returns the nonce back as part of auth metadata. 
+            This value should be used with further login requests, to establish client authenticity. 
+            Clients can choose to set a custom nonce if preferred, in which case, it is recommended 
+            that clients provide a strong nonce. If a nonce is provided but with an empty value, 
+            it indicates intent to disable reauthentication. Note that, when disallow_reauthentication option 
+            is enabled on either the role or the role tag, the nonce holds no significance. 
+            This is ignored unless using the ec2 auth method.
+            When <see cref="!:disallowReauthentication"/> option is enabled on either the role 
+            or the role tag, then nonce parameter is optional. 
+            It is a required parameter otherwise.
+            </summary>
+            <value>
+            The nonce.
+            </value>
+        </member>
+        <member name="M:VaultSharp.V1.AuthMethods.AWS.AbstractAWSAuthMethodInfo.#ctor(System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:VaultSharp.V1.AuthMethods.AWS.AbstractAWSAuthMethodInfo"/> class.
+            </summary>
+            <param name="nonce">
+            <para>[required/optional]</para>
+            The nonce to be used for subsequent login requests. 
+            If this parameter is not specified at all and if reauthentication is allowed, 
+            then the method will generate a random nonce, attaches it to the instance's identity-accesslist 
+            entry and returns the nonce back as part of auth metadata. 
+            This value should be used with further login requests, to establish client authenticity. 
+            Clients can choose to set a custom nonce if preferred, in which case, it is recommended 
+            that clients provide a strong nonce. If a nonce is provided but with an empty value, 
+            it indicates intent to disable reauthentication. Note that, when disallow_reauthentication option 
+            is enabled on either the role or the role tag, the nonce holds no significance. 
+            This is ignored unless using the ec2 auth method.
+            When <see cref="!:disallowReauthentication"/> option is enabled on either the role 
+            or the role tag, then nonce parameter is optional. 
+            It is a required parameter otherwise.
+            </param>
+            <param name="roleName">
+            <para>[optional]</para>
+            The name of the role against which the login is being attempted. 
+            If role is not specified, then the login endpoint looks for a role bearing 
+            the name of the AMI ID of the EC2 instance that is trying to login
+            if using the ec2 auth method, or the "friendly name" (i.e., role name or username) 
+            of the IAM principal authenticated.. 
+            If a matching role is not found, login fails.
+            </param>
+        </member>
+        <member name="M:VaultSharp.V1.AuthMethods.AWS.AbstractAWSAuthMethodInfo.#ctor(System.String,System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:VaultSharp.V1.AuthMethods.AWS.AbstractAWSAuthMethodInfo"/> class.
+            </summary>
+            <param name="mountPoint">
+            <para>[required]</para>
+            The mount point.</param>
+            <param name="nonce">
+            <para>[required/optional]</para>
+            The nonce to be used for subsequent login requests. 
+            If this parameter is not specified at all and if reauthentication is allowed, 
+            then the method will generate a random nonce, attaches it to the instance's identity-accesslist 
+            entry and returns the nonce back as part of auth metadata. 
+            This value should be used with further login requests, to establish client authenticity. 
+            Clients can choose to set a custom nonce if preferred, in which case, it is recommended 
+            that clients provide a strong nonce. If a nonce is provided but with an empty value, 
+            it indicates intent to disable reauthentication. Note that, when disallow_reauthentication option 
+            is enabled on either the role or the role tag, the nonce holds no significance. 
+            This is ignored unless using the ec2 auth method.
+            When <see cref="!:disallowReauthentication"/> option is enabled on either the role 
+            or the role tag, then nonce parameter is optional. 
+            It is a required parameter otherwise.
+            </param>
+            <param name="roleName">
+            <para>[optional]</para>
+            The name of the role against which the login is being attempted. 
+            If role is not specified, then the login endpoint looks for a role bearing 
+            the name of the AMI ID of the EC2 instance that is trying to login
+            if using the ec2 auth method, or the "friendly name" (i.e., role name or username) 
+            of the IAM principal authenticated.. 
+            If a matching role is not found, login fails.
+            </param>
+        </member>
+        <member name="T:VaultSharp.V1.AuthMethods.AWS.AWSAuthMethodType">
+            <summary>
+            Represents the AWS Auth types.
+            </summary>
+        </member>
+        <member name="F:VaultSharp.V1.AuthMethods.AWS.AWSAuthMethodType.EC2">
+            <summary>
+            EC2 based auth.
+            </summary>
+        </member>
+        <member name="F:VaultSharp.V1.AuthMethods.AWS.AWSAuthMethodType.IAM">
+            <summary>
+            IAM based Auth.
+            </summary>
+        </member>
+        <member name="T:VaultSharp.V1.AuthMethods.AWS.EC2AWSAuthMethodInfo">
+            <summary>
+            Represents the login information for the EC2 AWS Authentication backend.
+            </summary>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.AWS.EC2AWSAuthMethodInfo.AWSAuthMethodType">
+            <summary>
+            Gets the AWS Auth method type.
+            </summary>
+            <value>
+            The AWS auth type.
+            </value>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.AWS.EC2AWSAuthMethodInfo.Identity">
+            <summary>
+            Gets the Base64 encoded EC2 instance identity document. 
+            This needs to be supplied along with the signature parameter.
+            </summary>
+            <value>
+            The Base64 encoded EC2 instance identity document signature.
+            </value>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.AWS.EC2AWSAuthMethodInfo.Signature">
+            <summary>
+            Gets the Base64 encoded SHA256 RSA signature of the instance identity document. 
+            This needs to be supplied along with identity parameter when using the ec2 auth method.
+            </summary>
+            <value>
+            The Identity signature.
+            </value>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.AWS.EC2AWSAuthMethodInfo.PKCS7">
+            <summary>
+            Gets the PKCS7 signature of the identity document with all \n characters removed.
+            Either this needs to be set OR both identity and signature need to be set when using the ec2 auth method.
+            </summary>
+            <value>
+            The PKCS7 signature.
+            </value>
+        </member>
+        <member name="M:VaultSharp.V1.AuthMethods.AWS.EC2AWSAuthMethodInfo.#ctor(System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:VaultSharp.V1.AuthMethods.AWS.AbstractAWSAuthMethodInfo"/> class.
+            </summary>
+            <param name = "pkcs7" >
+            <para>[required/optional]</para>
+            The PKCS7 signature of the identity document with all \n characters removed.
+            Either this needs to be set OR both identity and signature need to be set when using the ec2 auth method.
+            </param>
+            <param name = "identity" >
+            <para>[required/optional]</para>
+            The Base64 encoded EC2 instance identity document. 
+            This needs to be supplied along with the signature parameter.
+            </param>
+            <param name = "signature" >
+            <para>[required/optional]</para>
+            The Base64 encoded SHA256 RSA signature of the instance identity document. 
+            This needs to be supplied along with identity parameter when using the ec2 auth method.
+            </param>
+            <param name="nonce">
+            <para>[required/optional]</para>
+            The nonce to be used for subsequent login requests. 
+            If this parameter is not specified at all and if reauthentication is allowed, 
+            then the method will generate a random nonce, attaches it to the instance's identity-accesslist 
+            entry and returns the nonce back as part of auth metadata. 
+            This value should be used with further login requests, to establish client authenticity. 
+            Clients can choose to set a custom nonce if preferred, in which case, it is recommended 
+            that clients provide a strong nonce. If a nonce is provided but with an empty value, 
+            it indicates intent to disable reauthentication. Note that, when disallow_reauthentication option 
+            is enabled on either the role or the role tag, the nonce holds no significance. 
+            This is ignored unless using the ec2 auth method.
+            When <see cref="!:disallowReauthentication"/> option is enabled on either the role 
+            or the role tag, then nonce parameter is optional. 
+            It is a required parameter otherwise.
+            </param>
+            <param name="roleName">
+            <para>[optional]</para>
+            The name of the role against which the login is being attempted. 
+            If role is not specified, then the login endpoint looks for a role bearing 
+            the name of the AMI ID of the EC2 instance that is trying to login
+            if using the ec2 auth method, or the "friendly name" (i.e., role name or username) 
+            of the IAM principal authenticated.. 
+            If a matching role is not found, login fails.
+            </param>
+        </member>
+        <member name="M:VaultSharp.V1.AuthMethods.AWS.EC2AWSAuthMethodInfo.#ctor(System.String,System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:VaultSharp.V1.AuthMethods.AWS.AbstractAWSAuthMethodInfo"/> class.
+            </summary>
+            <param name="mountPoint">The mount point.</param>
+            <param name = "pkcs7" >
+            <para>[required/optional]</para>
+            The PKCS7 signature of the identity document with all \n characters removed.
+            Either this needs to be set OR both identity and signature need to be set when using the ec2 auth method.
+            </param>
+            <param name = "identity" >
+            <para>[required/optional]</para>
+            The Base64 encoded EC2 instance identity document. 
+            This needs to be supplied along with the signature parameter.
+            </param>
+            <param name = "signature" >
+            <para>[required/optional]</para>
+            The Base64 encoded SHA256 RSA signature of the instance identity document. 
+            This needs to be supplied along with identity parameter when using the ec2 auth method.
+            </param>
+            <param name="nonce">
+            <para>[required/optional]</para>
+            The nonce to be used for subsequent login requests. 
+            If this parameter is not specified at all and if reauthentication is allowed, 
+            then the method will generate a random nonce, attaches it to the instance's identity-accesslist 
+            entry and returns the nonce back as part of auth metadata. 
+            This value should be used with further login requests, to establish client authenticity. 
+            Clients can choose to set a custom nonce if preferred, in which case, it is recommended 
+            that clients provide a strong nonce. If a nonce is provided but with an empty value, 
+            it indicates intent to disable reauthentication. Note that, when disallow_reauthentication option 
+            is enabled on either the role or the role tag, the nonce holds no significance. 
+            This is ignored unless using the ec2 auth method.
+            When <see cref="!:disallowReauthentication"/> option is enabled on either the role 
+            or the role tag, then nonce parameter is optional. 
+            It is a required parameter otherwise.
+            </param>
+            <param name="roleName">
+            <para>[optional]</para>
+            The name of the role against which the login is being attempted. 
+            If role is not specified, then the login endpoint looks for a role bearing 
+            the name of the AMI ID of the EC2 instance that is trying to login
+            if using the ec2 auth method, or the "friendly name" (i.e., role name or username) 
+            of the IAM principal authenticated.. 
+            If a matching role is not found, login fails.
+            </param>
+        </member>
+        <member name="T:VaultSharp.V1.AuthMethods.AWS.IAMAWSAuthMethodInfo">
+            <summary>
+            Represents the login information for the IAM AWS Authentication backend.
+            </summary>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.AWS.IAMAWSAuthMethodInfo.AWSAuthMethodType">
+            <summary>
+            Gets the AWS Auth method type.
+            </summary>
+            <value>
+            The AWS auth type.
+            </value>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.AWS.IAMAWSAuthMethodInfo.HttpRequestMethod">
+            <summary>
+            Gets the HTTP method used in the signed request. 
+            Currently only POST is supported, but other methods may be supported in the future. 
+            This is required when using the iam auth method.
+            </summary>
+            <value>
+            The HTTP method used in the signed request.
+            </value>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.AWS.IAMAWSAuthMethodInfo.RequestUrl">
+            <summary>
+            Gets the Base64-encoded HTTP URL used in the signed request. 
+            Most likely just aHR0cHM6Ly9zdHMuYW1hem9uYXdzLmNvbS8= (base64-encoding of https://sts.amazonaws.com/) as most 
+            requests will probably use POST with an empty URI.
+            This is required when using the iam auth method.
+            </summary>
+            <value>
+            The Request Url used in the signed request.
+            </value>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.AWS.IAMAWSAuthMethodInfo.RequestBody">
+            <summary>
+            Gets the Base64-encoded HTTP body used in the signed request. 
+            Most likely QWN0aW9uPUdldENhbGxlcklkZW50aXR5JlZlcnNpb249MjAxMS0wNi0xNQ== which is the base64 encoding of 
+            <![CDATA[ Action=GetCallerIdentity&Version=2011-06-15 ]]>
+            This is required when using the iam auth method.
+            </summary>
+            <value>
+            The Request Url used in the signed request.
+            </value>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.AWS.IAMAWSAuthMethodInfo.RequestHeaders">
+            <summary>
+            Gets the Base64-encoded, JSON-serialized representation of the sts:GetCallerIdentity HTTP request headers. 
+            The JSON serialization assumes that each header key maps to either a string value or an array of string 
+            values (though the length of that array will probably only be one). 
+            If the iam_server_id_header_value is configured in Vault for the aws auth mount, 
+            then the headers must include the X-Vault-AWS-IAM-Server-ID header, 
+            its value must match the value configured, and the header must be included in the signed headers. 
+            This is required when using the iam auth method.
+            </summary>
+            <value>
+            The Base64-encoded, JSON-serialized representation of the sts:GetCallerIdentity HTTP request headers. 
+            </value>
+        </member>
+        <member name="M:VaultSharp.V1.AuthMethods.AWS.IAMAWSAuthMethodInfo.#ctor(System.String,System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:VaultSharp.V1.AuthMethods.AWS.IAMAWSAuthMethodInfo"/> class.
+            </summary>
+            <param name="requestHeaders">
+            <para>[required]</para>
+            The Base64-encoded, JSON-serialized representation of the sts:GetCallerIdentity HTTP request headers. 
+            The JSON serialization assumes that each header key maps to either a string value or an array of string 
+            values (though the length of that array will probably only be one). 
+            If the iam_server_id_header_value is configured in Vault for the aws auth mount, 
+            then the headers must include the X-Vault-AWS-IAM-Server-ID header, 
+            its value must match the value configured, and the header must be included in the signed headers. 
+            This is required when using the iam auth method.
+            Please see <see href="https://github.com/rajanadar/VaultSharp/blob/master/README.md#aws-auth-method---iam"/> on how to construct this.
+            </param>
+            <param name="httpRequestMethod">
+            <para>[required]</para>
+            The HTTP method used in the signed request. 
+            Currently only POST is supported, but other methods may be supported in the future. 
+            This is required when using the iam auth method.
+            </param>
+            <param name="requestUrl">
+            <para>[required]</para>
+            Base64-encoded HTTP URL used in the signed request. 
+            Most likely just aHR0cHM6Ly9zdHMuYW1hem9uYXdzLmNvbS8= (base64-encoding of https://sts.amazonaws.com/) as 
+            most requests will probably use POST with an empty URI. 
+            This is required when using the iam auth method.
+            </param>
+            <param name="requestBody">
+            <para>[required]</para>
+            Base64-encoded body of the signed request. Most likely QWN0aW9uPUdldENhbGxlcklkZW50aXR5JlZlcnNpb249MjAxMS0wNi0xNQ== 
+            which is the base64 encoding of <![CDATA[ Action=GetCallerIdentity&Version=2011-06-15 ]]>.
+            This is required when using the iam auth method.
+            </param>
+            <param name="nonce">
+            <para>[required/optional]</para>
+            The nonce to be used for subsequent login requests. 
+            If this parameter is not specified at all and if reauthentication is allowed, 
+            then the method will generate a random nonce, attaches it to the instance's identity-accesslist 
+            entry and returns the nonce back as part of auth metadata. 
+            This value should be used with further login requests, to establish client authenticity. 
+            Clients can choose to set a custom nonce if preferred, in which case, it is recommended 
+            that clients provide a strong nonce. If a nonce is provided but with an empty value, 
+            it indicates intent to disable reauthentication. Note that, when disallow_reauthentication option 
+            is enabled on either the role or the role tag, the nonce holds no significance. 
+            This is ignored unless using the ec2 auth method.
+            When <see cref="!:disallowReauthentication"/> option is enabled on either the role 
+            or the role tag, then nonce parameter is optional. 
+            It is a required parameter otherwise.
+            </param>
+            <param name="roleName">
+            <para>[optional]</para>
+            The name of the role against which the login is being attempted. 
+            If role is not specified, then the login endpoint looks for a role bearing 
+            the name of the AMI ID of the EC2 instance that is trying to login
+            if using the ec2 auth method, or the "friendly name" (i.e., role name or username) 
+            of the IAM principal authenticated.. 
+            If a matching role is not found, login fails.
+            </param>
+        </member>
+        <member name="M:VaultSharp.V1.AuthMethods.AWS.IAMAWSAuthMethodInfo.#ctor(System.String,System.String,System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:VaultSharp.V1.AuthMethods.AWS.IAMAWSAuthMethodInfo"/> class.
+            </summary>
+            <param name="mountPoint">The mount point.</param>
+            <param name="requestHeaders">
+            <para>[required]</para>
+            The Base64-encoded, JSON-serialized representation of the sts:GetCallerIdentity HTTP request headers. 
+            The JSON serialization assumes that each header key maps to either a string value or an array of string 
+            values (though the length of that array will probably only be one). 
+            If the iam_server_id_header_value is configured in Vault for the aws auth mount, 
+            then the headers must include the X-Vault-AWS-IAM-Server-ID header, 
+            its value must match the value configured, and the header must be included in the signed headers. 
+            This is required when using the iam auth method.
+            </param>
+            <param name="httpRequestMethod">
+            <para>[required]</para>
+            The HTTP method used in the signed request. 
+            Currently only POST is supported, but other methods may be supported in the future. 
+            This is required when using the iam auth method.
+            </param>
+            <param name="requestUrl">
+            <para>[required]</para>
+            Base64-encoded HTTP URL used in the signed request. 
+            Most likely just aHR0cHM6Ly9zdHMuYW1hem9uYXdzLmNvbS8= (base64-encoding of https://sts.amazonaws.com/) as 
+            most requests will probably use POST with an empty URI. 
+            This is required when using the iam auth method.
+            </param>
+            <param name="requestBody">
+            <para>[required]</para>
+            Base64-encoded body of the signed request. Most likely QWN0aW9uPUdldENhbGxlcklkZW50aXR5JlZlcnNpb249MjAxMS0wNi0xNQ== 
+            which is the base64 encoding of <![CDATA[ Action=GetCallerIdentity&Version=2011-06-15 ]]>.
+            This is required when using the iam auth method.
+            </param>
+            <param name="nonce">
+            <para>[required/optional]</para>
+            The nonce to be used for subsequent login requests. 
+            If this parameter is not specified at all and if reauthentication is allowed, 
+            then the method will generate a random nonce, attaches it to the instance's identity-accesslist 
+            entry and returns the nonce back as part of auth metadata. 
+            This value should be used with further login requests, to establish client authenticity. 
+            Clients can choose to set a custom nonce if preferred, in which case, it is recommended 
+            that clients provide a strong nonce. If a nonce is provided but with an empty value, 
+            it indicates intent to disable reauthentication. Note that, when disallow_reauthentication option 
+            is enabled on either the role or the role tag, the nonce holds no significance. 
+            This is ignored unless using the ec2 auth method.
+            When <see cref="!:disallowReauthentication"/> option is enabled on either the role 
+            or the role tag, then nonce parameter is optional. 
+            It is a required parameter otherwise.
+            </param>
+            <param name="roleName">
+            <para>[optional]</para>
+            The name of the role against which the login is being attempted. 
+            If role is not specified, then the login endpoint looks for a role bearing 
+            the name of the AMI ID of the EC2 instance that is trying to login
+            if using the ec2 auth method, or the "friendly name" (i.e., role name or username) 
+            of the IAM principal authenticated.. 
+            If a matching role is not found, login fails.
+            </param>
+        </member>
+        <member name="T:VaultSharp.V1.AuthMethods.AWS.IAWSAuthMethod">
+            <summary>
+            Non login methods
+            </summary>
+        </member>
+        <member name="T:VaultSharp.V1.AuthMethods.Azure.AzureAuthMethodInfo">
+            <summary>
+            Represents the login information for the Azure Authentication backend.
+            </summary>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.Azure.AzureAuthMethodInfo.AuthMethodType">
+            <summary>
+            Gets the type of the authentication backend.
+            </summary>
+            <value>
+            The type of the authentication backend.
+            </value>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.Azure.AzureAuthMethodInfo.MountPoint">
+            <summary>
+            Gets the mount point.
+            Presence or absence of leading or trailing slashes don't matter.
+            </summary>
+            <value>
+            The mount point.
+            </value>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.Azure.AzureAuthMethodInfo.RoleName">
+            <summary>
+            [required]
+            Gets the name of the role against which the login is being attempted.
+            </summary>
+            <value>
+            The role name.
+            </value>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.Azure.AzureAuthMethodInfo.JWT">
+            <summary>
+            [required]
+            Gets the signed JSON Web Token (JWT) from Azure MSI.
+            </summary>
+            <value>
+            The jwt.
+            </value>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.Azure.AzureAuthMethodInfo.SubscriptionId">
+            <summary>
+            [optional]
+            Gets the subscription ID for the machine that generated the MSI token. 
+            This information can be obtained through instance metadata.
+            </summary>
+            <value>
+            The value.
+            </value>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.Azure.AzureAuthMethodInfo.ResourceGroupName">
+            <summary>
+            [optional]
+            Gets the resource group for the machine that generated the MSI token. 
+            This information can be obtained through instance metadata.
+            </summary>
+            <value>
+            The value.
+            </value>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.Azure.AzureAuthMethodInfo.VirtualMachineName">
+            <summary>
+            [optional]
+            Gets the virtual machine name for the machine that generated the MSI token. 
+            This information can be obtained through instance metadata. 
+            If <see cref="P:VaultSharp.V1.AuthMethods.Azure.AzureAuthMethodInfo.VirtualMachineScaleSetName"/> is provided, this value is ignored.
+            </summary>
+            <value>
+            The value.
+            </value>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.Azure.AzureAuthMethodInfo.VirtualMachineScaleSetName">
+            <summary>
+            [optional]
+            Gets the virtual machine scale set name for the machine that generated the MSI token. 
+            This information can be obtained through instance metadata.
+            </summary>
+            <value>
+            The value.
+            </value>
+        </member>
+        <member name="M:VaultSharp.V1.AuthMethods.Azure.AzureAuthMethodInfo.#ctor(System.String,System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:VaultSharp.V1.AuthMethods.Azure.AzureAuthMethodInfo"/> class.
+            </summary>
+            <param name="roleName">[required]
+            The name of the role against which the login is being attempted.
+            </param>
+            <param name="jwt">
+            [required]
+            The signed JSON Web Token (JWT) from Azure MSI.
+            </param>
+            <param name="subscriptionId">
+            [optional]
+            The subscription ID for the machine that generated the MSI token. 
+            This information can be obtained through instance metadata.
+            </param>
+            <param name="resourceGroupName">
+            [optional]
+            The resource group for the machine that generated the MSI token. 
+            This information can be obtained through instance metadata.
+            </param>
+            <param name="virtualMachineName">
+            [optional]
+            The virtual machine name for the machine that generated the MSI token. 
+            This information can be obtained through instance metadata. 
+            If <see cref="P:VaultSharp.V1.AuthMethods.Azure.AzureAuthMethodInfo.VirtualMachineScaleSetName"/> is provided, this value is ignored.
+            </param>
+            <param name="virtualMachineScaleSetName">
+            [optional]
+            The virtual machine scale set name for the machine that generated the MSI token. 
+            This information can be obtained through instance metadata.
+            </param>
+        </member>
+        <member name="M:VaultSharp.V1.AuthMethods.Azure.AzureAuthMethodInfo.#ctor(System.String,System.String,System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:VaultSharp.V1.AuthMethods.Azure.AzureAuthMethodInfo"/> class.
+            </summary>
+            <param name="mountPoint">The mount point.</param>
+            <param name="roleName">[required]
+            The name of the role against which the login is being attempted.
+            </param>
+            <param name="jwt">
+            [required]
+            The signed JSON Web Token (JWT) from Azure MSI.
+            </param>
+            <param name="subscriptionId">
+            [optional]
+            The subscription ID for the machine that generated the MSI token. 
+            This information can be obtained through instance metadata.
+            </param>
+            <param name="resourceGroupName">
+            [optional]
+            The resource group for the machine that generated the MSI token. 
+            This information can be obtained through instance metadata.
+            </param>
+            <param name="virtualMachineName">
+            [optional]
+            The virtual machine name for the machine that generated the MSI token. 
+            This information can be obtained through instance metadata. 
+            If <see cref="P:VaultSharp.V1.AuthMethods.Azure.AzureAuthMethodInfo.VirtualMachineScaleSetName"/> is provided, this value is ignored.
+            </param>
+            <param name="virtualMachineScaleSetName">
+            [optional]
+            The virtual machine scale set name for the machine that generated the MSI token. 
+            This information can be obtained through instance metadata.
+            </param>
+        </member>
+        <member name="T:VaultSharp.V1.AuthMethods.Azure.IAzureAuthMethod">
+            <summary>
+            Non login operations.
+            </summary>
+        </member>
+        <member name="T:VaultSharp.V1.AuthMethods.Cert.CertAuthMethodInfo">
+            <summary>
+            Represents the login information for the Cert Authentication backend.
+            </summary>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.Cert.CertAuthMethodInfo.AuthMethodType">
+            <summary>
+            Gets the type of the authentication backend.
+            </summary>
+            <value>
+            The type of the authentication backend.
+            </value>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.Cert.CertAuthMethodInfo.MountPoint">
+            <summary>
+            Gets the mount point.
+            Presence or absence of leading or trailing slashes don't matter.
+            </summary>
+            <value>
+            The mount point.
+            </value>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.Cert.CertAuthMethodInfo.ClientCertificate">
+            <summary>
+            Gets the client certificate.
+            </summary>
+            <value>
+            The client certificate.
+            </value>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.Cert.CertAuthMethodInfo.ClientCertificateCollection">
+            <summary>
+            Gets the collection of client certificates including the chain.
+            Use this property if you want to attach the full chain of certs.
+            Use either this property or the <see cref="P:VaultSharp.V1.AuthMethods.Cert.CertAuthMethodInfo.ClientCertificate"/> property, not both.
+            </summary>
+            <value>
+            The client certificates.
+            </value>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.Cert.CertAuthMethodInfo.RoleName">
+            <summary>
+            Optionally, you may specify a single certificate role to authenticate against.
+            </summary>
+        </member>
+        <member name="M:VaultSharp.V1.AuthMethods.Cert.CertAuthMethodInfo.#ctor(System.Security.Cryptography.X509Certificates.X509Certificate2,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:VaultSharp.V1.AuthMethods.Cert.CertAuthMethodInfo" /> class.
+            </summary>
+            <param name="clientCertificate">The client certificate.</param>
+            <param name="roleName">A single certificate role to authenticate against.</param>
+        </member>
+        <member name="M:VaultSharp.V1.AuthMethods.Cert.CertAuthMethodInfo.#ctor(System.String,System.Security.Cryptography.X509Certificates.X509Certificate2,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:VaultSharp.V1.AuthMethods.Cert.CertAuthMethodInfo"/> class.
+            </summary>
+            <param name="mountPoint">The mount point.</param>
+            <param name="clientCertificate">The client certificate.</param>
+            <param name="roleName">A single certificate role to authenticate against.</param>
+        </member>
+        <member name="M:VaultSharp.V1.AuthMethods.Cert.CertAuthMethodInfo.#ctor(System.Security.Cryptography.X509Certificates.X509Certificate2Collection,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:VaultSharp.V1.AuthMethods.Cert.CertAuthMethodInfo" /> class.
+            </summary>
+            <param name="clientCertificateCollection">The client certificate including the chain.</param>
+            <param name="roleName">A single certificate role to authenticate against.</param>
+        </member>
+        <member name="M:VaultSharp.V1.AuthMethods.Cert.CertAuthMethodInfo.#ctor(System.String,System.Security.Cryptography.X509Certificates.X509Certificate2Collection,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:VaultSharp.V1.AuthMethods.Cert.CertAuthMethodInfo"/> class.
+            </summary>
+            <param name="mountPoint">The mount point.</param>
+            <param name="clientCertificateCollection">The client certificate including the chain.</param>
+            <param name="roleName">A single certificate role to authenticate against.</param>
+        </member>
+        <member name="T:VaultSharp.V1.AuthMethods.CloudFoundry.CloudFoundryAuthMethodInfo">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.CloudFoundry.CloudFoundryAuthMethodInfo.AuthMethodType">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.CloudFoundry.CloudFoundryAuthMethodInfo.MountPoint">
+            <summary>
+            Gets the mount point.
+            Presence or absence of leading or trailing slashes don't matter.
+            </summary>
+            <value>
+            The mount point.
+            </value>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.CloudFoundry.CloudFoundryAuthMethodInfo.RoleName">
+            <summary>
+            [required]
+            Gets the name of the role against which the login is being attempted.
+            </summary>
+            <value>
+            The role name.
+            </value>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.CloudFoundry.CloudFoundryAuthMethodInfo.CFInstanceCertContent">
+            <summary>
+            [required]
+            The full body of the file available at the path denoted by CF_INSTANCE_CERT.
+            </summary>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.CloudFoundry.CloudFoundryAuthMethodInfo.Signature">
+            <summary>
+            [required]
+            The signature.
+            Please see https://gist.github.com/rajanadar/84769efeca64e0128d7a8a627b7bb4db
+            </summary>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.CloudFoundry.CloudFoundryAuthMethodInfo.SignatureDateTime">
+            <summary>
+            [required]
+            The datetime used in the signature.
+            </summary>
+        </member>
+        <member name="M:VaultSharp.V1.AuthMethods.CloudFoundry.CloudFoundryAuthMethodInfo.#ctor(System.String,System.String,System.DateTime,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:VaultSharp.V1.AuthMethods.CloudFoundry.CloudFoundryAuthMethodInfo"/> class.
+            </summary>
+            <param name="roleName">[required]
+            The name of the role against which the login is being attempted.
+            </param>
+            <param name="instanceCertContent">[required]
+            The full body of the file available at the path denoted by CF_INSTANCE_CERT.
+            </param>
+            <param name="signatureDateTime">[required]
+            The datetime used in the signature.
+            </param>
+            <param name="signature">[required]
+            The signature.
+            </param>
+        </member>
+        <member name="M:VaultSharp.V1.AuthMethods.CloudFoundry.CloudFoundryAuthMethodInfo.#ctor(System.String,System.String,System.String,System.DateTime,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:VaultSharp.V1.AuthMethods.CloudFoundry.CloudFoundryAuthMethodInfo"/> class.
+            </summary>
+            <param name="mountPoint">The mount point.</param>
+            <param name="roleName">[required]
+            The name of the role against which the login is being attempted.
+            </param>
+            <param name="instanceCertContent">[required]
+            The full body of the file available at the path denoted by CF_INSTANCE_CERT.
+            </param>
+            <param name="signatureDateTime">[required]
+            The datetime used in the signature.
+            </param>
+            <param name="signature">[required]
+            The signature.
+            </param>
+        </member>
+        <member name="T:VaultSharp.V1.AuthMethods.Custom.CustomAuthMethodInfo">
+            <summary>
+            Represents the login information for the Custom Authentication backend.
+            </summary>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.Custom.CustomAuthMethodInfo.AuthMethodType">
+            <summary>
+            Gets the type of the authentication backend.
+            </summary>
+            <value>
+            The type of the authentication backend.
+            </value>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.Custom.CustomAuthMethodInfo.CustomAuthInfoAsyncDelegate">
+            <summary>
+            Gets the CustomAuthInfo asynchronous delegate which includes the token and token info.
+            </summary>
+        </member>
+        <member name="M:VaultSharp.V1.AuthMethods.Custom.CustomAuthMethodInfo.#ctor(System.String,System.Func{System.Threading.Tasks.Task{VaultSharp.V1.Commons.AuthInfo}})">
+            <summary>
+            Initializes a new instance of the <see cref="T:VaultSharp.V1.AuthMethods.Custom.CustomAuthMethodInfo"/> class.
+            </summary>
+            <param name="type">The type of the unknown authentication backend type not supported by this library yet. But supported by the Vault Server.</param>
+            <param name="customAuthInfoAsyncDelegate">The authentication token asynchronous delegate.</param>
+        </member>
+        <member name="T:VaultSharp.V1.AuthMethods.GoogleCloud.GoogleCloudAuthMethodInfo">
+            <summary>
+            Represents the login information for the GoogleCloud Authentication backend.
+            </summary>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.GoogleCloud.GoogleCloudAuthMethodInfo.AuthMethodType">
+            <summary>
+            Gets the type of the authentication backend.
+            </summary>
+            <value>
+            The type of the authentication backend.
+            </value>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.GoogleCloud.GoogleCloudAuthMethodInfo.MountPoint">
+            <summary>
+            Gets the mount point.
+            Presence or absence of leading or trailing slashes don't matter.
+            </summary>
+            <value>
+            The mount point.
+            </value>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.GoogleCloud.GoogleCloudAuthMethodInfo.RoleName">
+            <summary>
+            [required]
+            Gets the name of the role against which the login is being attempted.
+            </summary>
+            <value>
+            The role name.
+            </value>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.GoogleCloud.GoogleCloudAuthMethodInfo.JWT">
+            <summary>
+            [required]
+            Gets the signed JSON Web Token (JWT).
+            For iam type roles, this is a JWT signed with the signJwt method <see href="https://cloud.google.com/iam/reference/rest/v1/projects.serviceAccounts/signJwt" /> or a self-signed JWT.
+            For gce type roles, this is an identity metadata token. <see href="https://cloud.google.com/compute/docs/instances/verifying-instance-identity#request_signature"/>
+            </summary>
+            <value>
+            The jwt.
+            </value>
+        </member>
+        <member name="M:VaultSharp.V1.AuthMethods.GoogleCloud.GoogleCloudAuthMethodInfo.#ctor(System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:VaultSharp.V1.AuthMethods.GoogleCloud.GoogleCloudAuthMethodInfo"/> class.
+            </summary>
+            <param name="roleName">[required]
+            The name of the role against which the login is being attempted.
+            </param>
+            <param name="jwt">
+            [required]
+            The signed JSON Web Token (JWT).
+            For iam type roles, this is a JWT signed with the signJwt method <see href="https://cloud.google.com/iam/reference/rest/v1/projects.serviceAccounts/signJwt" /> or a self-signed JWT.
+            For gce type roles, this is an identity metadata token. <see href="https://cloud.google.com/compute/docs/instances/verifying-instance-identity#request_signature"/>
+            </param>
+        </member>
+        <member name="M:VaultSharp.V1.AuthMethods.GoogleCloud.GoogleCloudAuthMethodInfo.#ctor(System.String,System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:VaultSharp.V1.AuthMethods.GoogleCloud.GoogleCloudAuthMethodInfo"/> class.
+            </summary>
+            <param name="mountPoint">The mount point.</param>
+            <param name="roleName">[required]
+            The name of the role against which the login is being attempted.
+            </param>
+            <param name="jwt">
+            [required]
+            The signed JSON Web Token (JWT).
+            For iam type roles, this is a JWT signed with the signJwt method <see href="https://cloud.google.com/iam/reference/rest/v1/projects.serviceAccounts/signJwt" /> or a self-signed JWT.
+            For gce type roles, this is an identity metadata token. <see href="https://cloud.google.com/compute/docs/instances/verifying-instance-identity#request_signature"/>
+            </param>
+        </member>
+        <member name="T:VaultSharp.V1.AuthMethods.GoogleCloud.IGoogleCloudAuthMethod">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:VaultSharp.V1.AuthMethods.GitHub.GitHubAuthMethodInfo">
+            <summary>
+            Represents the login information for the GitHub Authentication backend.
+            </summary>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.GitHub.GitHubAuthMethodInfo.AuthMethodType">
+            <summary>
+            Gets the type of the authentication backend.
+            </summary>
+            <value>
+            The type of the authentication backend.
+            </value>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.GitHub.GitHubAuthMethodInfo.MountPoint">
+            <summary>
+            Gets the mount point.
+            Presence or absence of leading or trailing slashes don't matter.
+            </summary>
+            <value>
+            The mount point.
+            </value>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.GitHub.GitHubAuthMethodInfo.PersonalAccessToken">
+            <summary>
+            Gets the personal access token.
+            </summary>
+            <value>
+            The personal access token.
+            </value>
+        </member>
+        <member name="M:VaultSharp.V1.AuthMethods.GitHub.GitHubAuthMethodInfo.#ctor(System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:VaultSharp.V1.AuthMethods.GitHub.GitHubAuthMethodInfo"/> class.
+            </summary>
+            <param name="personalAccessToken">The personal access token.</param>
+        </member>
+        <member name="M:VaultSharp.V1.AuthMethods.GitHub.GitHubAuthMethodInfo.#ctor(System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:VaultSharp.V1.AuthMethods.GitHub.GitHubAuthMethodInfo"/> class.
+            </summary>
+            <param name="mountPoint">The mount point.</param>
+            <param name="personalAccessToken">The personal access token.</param>
+        </member>
+        <member name="T:VaultSharp.V1.AuthMethods.GitHub.IGitHubAuthMethod">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:VaultSharp.V1.AuthMethods.IAuthMethod">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.IAuthMethod.AliCloud">
+            <summary>
+            The AliCloud Auth method.
+            </summary>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.IAuthMethod.AppRole">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.IAuthMethod.AWS">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.IAuthMethod.Azure">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.IAuthMethod.CloudFoundry">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.IAuthMethod.GitHub">
+            <summary>
+            Hmm.
+            </summary>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.IAuthMethod.GoogleCloud">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.IAuthMethod.Kerberos">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.IAuthMethod.Kubernetes">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.IAuthMethod.LDAP">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.IAuthMethod.OCI">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.IAuthMethod.Okta">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.IAuthMethod.RADIUS">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.IAuthMethod.Cert">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.IAuthMethod.Token">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.IAuthMethod.UserPass">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="M:VaultSharp.V1.AuthMethods.IAuthMethod.ResetVaultToken">
+            <summary>
+            This will make VaultSharp fetch the vault token again before the new operation
+            </summary>
+        </member>
+        <member name="M:VaultSharp.V1.AuthMethods.IAuthMethod.PerformImmediateLogin">
+            <summary>
+            Performs immediate login to uncover login issues faster.
+            Cannot be used for Token Authentication, since you already have a token.
+            </summary>
+            <returns>Nothing</returns>
+        </member>
+        <member name="T:VaultSharp.V1.AuthMethods.IAuthMethodInfo">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.IAuthMethodInfo.AuthMethodType">
+            <summary>
+            Gets the type of the authentication method.
+            </summary>
+            <value>
+            The type of the authentication method.
+            </value>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.IAuthMethodInfo.ReturnedLoginAuthInfo">
+            <summary>
+            Gets the returned Login Auth info from Vault.
+            It'll have the vault login token, accessors and any login metadata.
+            </summary>
+        </member>
+        <member name="T:VaultSharp.V1.AuthMethods.IAuthMethodLoginProvider">
+            <summary>
+            Auth Method login provider.
+            </summary>
+        </member>
+        <member name="M:VaultSharp.V1.AuthMethods.IAuthMethodLoginProvider.GetVaultTokenAsync">
+            <summary>
+            The login method for the auth method.
+            </summary>
+            <returns>The Vault Token.</returns>
+        </member>
+        <member name="T:VaultSharp.V1.AuthMethods.JWT.IJWTAuthMethod">
+            <summary>
+            Non Login methods
+            </summary>
+        </member>
+        <member name="M:VaultSharp.V1.AuthMethods.JWT.IJWTAuthMethod.GetOIDCAuthURLAsync(System.String,System.String,System.String,System.String)">
+            <summary>
+            Obtain an authorization URL from Vault to start an OIDC login flow.
+            </summary>
+            <param name="redirectUri">
+            <para>[required]</para>
+            Path to the callback to complete the login. 
+            This will be of the form, "https://.../oidc/callback" where the leading portion is dependent on
+            your Vault server location, port, and the mount of the JWT plugin. 
+            This must be configured with Vault and the provider.
+            </param>
+            <param name="roleName">
+            <para>[optional]</para>
+            Name of the role against which the login is being attempted. 
+            Defaults to configured default_role if not provided.
+            </param>
+            <param name="clientNonce">
+            <para>[optional]</para>
+            Optional client-provided nonce that must match the client_nonce value provided 
+            during a subsequent request to the callback API.
+            </param>
+            <param name="mountPoint">
+            Mount point of the JWT Auth method
+            </param>
+            <returns>The OIDC Auth URL</returns>
+        </member>
+        <member name="M:VaultSharp.V1.AuthMethods.JWT.IJWTAuthMethod.DoOIDCCallbackAsync(System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            Exchange an authorization code for an OIDC ID Token. 
+            The ID token will be further validated against any bound claims, and if valid a Vault token will be returned.
+            </summary>
+            <param name="state">
+            <para>[required]</para>
+            Opaque state ID that is part of the Authorization URL and will be included in 
+            the the redirect following successful authentication on the provider.
+            </param>
+            <param name="nonce">
+            <para>[required]</para>
+            Opaque nonce that is part of the Authorization URL and will be 
+            included in the the redirect following successful authentication on the provider.
+            </param>
+            <param name="code">
+            <para>[required]</para>
+            Provider-generated authorization code that Vault will exchange for an ID token.
+            </param>
+            <param name="clientNonce">
+            <para>[optional]</para>
+            Optional client-provided nonce that must match the client_nonce value 
+            provided during the prior request to the auth API.
+            </param>
+            <param name="mountPoint">
+            Mount point of the JWT Auth method
+            </param>
+            <returns>The OIDC Vault Token</returns>
+        </member>
+        <member name="T:VaultSharp.V1.AuthMethods.JWT.JWTAuthMethodInfo">
+            <summary>
+            Represents the login information for the JWT Authentication backend.
+            </summary>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.JWT.JWTAuthMethodInfo.AuthMethodType">
+            <summary>
+            Gets the type of the authentication backend.
+            </summary>
+            <value>
+            The type of the authentication backend.
+            </value>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.JWT.JWTAuthMethodInfo.MountPoint">
+            <summary>
+            Gets the mount point.
+            Presence or absence of leading or trailing slashes don't matter.
+            </summary>
+            <value>
+            The mount point.
+            </value>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.JWT.JWTAuthMethodInfo.RoleName">
+            <summary>
+            [required]
+            Gets the name of the role against which the login is being attempted.
+            </summary>
+            <value>
+            The role name.
+            </value>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.JWT.JWTAuthMethodInfo.JWT">
+            <summary>
+            [required]
+            Gets the signed JSON Web Token (JWT).
+            </summary>
+            <value>
+            The jwt.
+            </value>
+        </member>
+        <member name="M:VaultSharp.V1.AuthMethods.JWT.JWTAuthMethodInfo.#ctor(System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:VaultSharp.V1.AuthMethods.JWT.JWTAuthMethodInfo"/> class.
+            </summary>
+            <param name="roleName">[required]
+            The name of the role against which the login is being attempted.
+            </param>
+            <param name="jwt">
+            [required]
+            The signed JSON Web Token (JWT).
+            </param>
+        </member>
+        <member name="M:VaultSharp.V1.AuthMethods.JWT.JWTAuthMethodInfo.#ctor(System.String,System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:VaultSharp.V1.AuthMethods.JWT.JWTAuthMethodInfo"/> class.
+            </summary>
+            <param name="mountPoint">The mount point.</param>
+            <param name="roleName">[required]
+            The name of the role against which the login is being attempted.
+            </param>
+            <param name="jwt">
+            [required]
+            The signed JSON Web Token (JWT).
+            </param>
+        </member>
+        <member name="T:VaultSharp.V1.AuthMethods.Kerberos.IKerberosAuthMethod">
+            <summary>
+            Kerberos Auth method.
+            </summary>
+        </member>
+        <member name="T:VaultSharp.V1.AuthMethods.Kerberos.KerberosAuthMethodInfo">
+            <summary>
+            Represents the login information for the Kerberos Authentication backend.
+            </summary>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.Kerberos.KerberosAuthMethodInfo.AuthMethodType">
+            <summary>
+            Gets the type of the authentication backend.
+            </summary>
+            <value>
+            The type of the authentication backend.
+            </value>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.Kerberos.KerberosAuthMethodInfo.MountPoint">
+            <summary>
+            Gets the mount point.
+            Presence or absence of leading or trailing slashes don't matter.
+            </summary>
+            <value>
+            The mount point.
+            </value>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.Kerberos.KerberosAuthMethodInfo.Credentials">
+            <summary>
+            Credentials to use for Kerberos authentication.
+            </summary>
+            <value>
+            The credentials.
+            </value>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.Kerberos.KerberosAuthMethodInfo.PreAuthenticate">
+            <summary>
+            Flag to indicate if the credentials should be cached.
+            Defaults to true.
+            </summary>
+            <value>
+            The flag.
+            </value>
+        </member>
+        <member name="M:VaultSharp.V1.AuthMethods.Kerberos.KerberosAuthMethodInfo.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:VaultSharp.V1.AuthMethods.Kerberos.KerberosAuthMethodInfo"/> class.
+            </summary>
+        </member>
+        <member name="M:VaultSharp.V1.AuthMethods.Kerberos.KerberosAuthMethodInfo.#ctor(System.Net.ICredentials)">
+            <summary>
+            Initializes a new instance of the <see cref="T:VaultSharp.V1.AuthMethods.Kerberos.KerberosAuthMethodInfo"/> class.
+            </summary>
+        </member>
+        <member name="M:VaultSharp.V1.AuthMethods.Kerberos.KerberosAuthMethodInfo.#ctor(System.String,System.Net.ICredentials)">
+            <summary>
+            Initializes a new instance of the <see cref="T:VaultSharp.V1.AuthMethods.Kerberos.KerberosAuthMethodInfo"/> class.
+            </summary>
+            <param name="mountPoint">The mount point.</param>
+            <param name="credentials">The credential to use.</param>
+        </member>
+        <member name="M:VaultSharp.V1.AuthMethods.Kerberos.KerberosAuthMethodInfo.#ctor(System.String,System.Net.ICredentials,System.Boolean)">
+            <summary>
+            Initializes a new instance of the <see cref="T:VaultSharp.V1.AuthMethods.Kerberos.KerberosAuthMethodInfo"/> class.
+            </summary>
+            <param name="mountPoint">The mount point.</param>
+            <param name="credentials">The credential to use.</param>
+            <param name="preAuthenticate">The flag to cache credentials.</param>
+        </member>
+        <member name="T:VaultSharp.V1.AuthMethods.Kubernetes.IKubernetesAuthMethod">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:VaultSharp.V1.AuthMethods.Kubernetes.KubernetesAuthMethodInfo">
+            <summary>
+            Represents the login information for the Kubernetes Authentication backend.
+            </summary>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.Kubernetes.KubernetesAuthMethodInfo.AuthMethodType">
+            <summary>
+            Gets the type of the authentication backend.
+            </summary>
+            <value>
+            The type of the authentication backend.
+            </value>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.Kubernetes.KubernetesAuthMethodInfo.MountPoint">
+            <summary>
+            Gets the mount point.
+            Presence or absence of leading or trailing slashes don't matter.
+            </summary>
+            <value>
+            The mount point.
+            </value>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.Kubernetes.KubernetesAuthMethodInfo.RoleName">
+            <summary>
+            [required]
+            Gets the name of the role against which the login is being attempted.
+            </summary>
+            <value>
+            The role name.
+            </value>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.Kubernetes.KubernetesAuthMethodInfo.JWT">
+            <summary>
+            [required]
+            Gets the signed JSON Web Token (jwt) for authenticating a service account.
+            </summary>
+            <value>
+            The jwt.
+            </value>
+        </member>
+        <member name="M:VaultSharp.V1.AuthMethods.Kubernetes.KubernetesAuthMethodInfo.#ctor(System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:VaultSharp.V1.AuthMethods.Kubernetes.KubernetesAuthMethodInfo"/> class.
+            </summary>
+            <param name="roleName">[required]
+            The name of the role against which the login is being attempted.
+            </param>
+            <param name="jwt">
+            [required]
+            The signed JSON Web Token (jwt) for authenticating a service account.
+            </param>
+        </member>
+        <member name="M:VaultSharp.V1.AuthMethods.Kubernetes.KubernetesAuthMethodInfo.#ctor(System.String,System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:VaultSharp.V1.AuthMethods.Kubernetes.KubernetesAuthMethodInfo"/> class.
+            </summary>
+            <param name="mountPoint">The mount point.</param>
+            <param name="roleName">[required]
+            The name of the role against which the login is being attempted.
+            </param>
+            <param name="jwt">
+            [required]
+            The signed JSON Web Token (jwt) for authenticating a service account.
+            </param>
+        </member>
+        <member name="T:VaultSharp.V1.AuthMethods.LDAP.ILDAPAuthMethod">
+            <summary>
+            LDAP Auth method.
+            </summary>
+        </member>
+        <member name="M:VaultSharp.V1.AuthMethods.LDAP.ILDAPAuthMethod.WriteGroupAsync(System.String,System.Collections.Generic.IList{System.String},System.String)">
+            <summary>
+            This endpoint creates or updates LDAP group policies.
+            </summary>
+            <param name="groupName"><para>[required]</para>
+            The name of the LDAP group
+            </param>
+            <param name="policies"><para>[required]</para>
+            List of policies associated to the group.
+            </param>
+            <param name="mountPoint"><para>[optional]</para>
+            The mount point for the LDAP backend. Defaults to <see cref="F:VaultSharp.V1.AuthMethods.AuthMethodDefaultPaths.LDAP" />
+            Provide a value only if you have customized the mount point.</param>        
+        </member>
+        <member name="M:VaultSharp.V1.AuthMethods.LDAP.ILDAPAuthMethod.ReadGroupAsync(System.String,System.String,System.String)">
+            <summary>
+            This endpoint reads LDAP group policies.
+            </summary>
+            <param name="groupName"><para>[required]</para>
+            The name of the LDAP group
+            </param>
+            <param name="mountPoint"><para>[optional]</para>
+            The mount point for the LDAP backend. Defaults to <see cref="F:VaultSharp.V1.AuthMethods.AuthMethodDefaultPaths.LDAP" />
+            Provide a value only if you have customized the mount point.</param>  
+            <param name="wrapTimeToLive">
+            <para>[optional]</para>
+            The TTL for the token and can be either an integer number of seconds or a string duration of seconds.
+            </param>
+            <returns>
+            The policies.
+            </returns>
+        </member>
+        <member name="M:VaultSharp.V1.AuthMethods.LDAP.ILDAPAuthMethod.ReadAllGroupsAsync(System.String,System.String)">
+            <summary>
+            This endpoint reads all LDAP groups.
+            </summary>
+            <param name="mountPoint"><para>[optional]</para>
+            The mount point for the LDAP backend. Defaults to <see cref="F:VaultSharp.V1.AuthMethods.AuthMethodDefaultPaths.LDAP" />
+            Provide a value only if you have customized the mount point.</param>  
+            <param name="wrapTimeToLive">
+            <para>[optional]</para>
+            The TTL for the token and can be either an integer number of seconds or a string duration of seconds.
+            </param>
+            <returns>
+            The groups.
+            </returns>
+        </member>
+        <member name="M:VaultSharp.V1.AuthMethods.LDAP.ILDAPAuthMethod.DeleteGroupAsync(System.String,System.String)">
+            <summary>
+            This endpoint deletes the LDAP group.
+            </summary>
+            <param name="groupName"><para>[required]</para>
+            The name of the LDAP group
+            </param>
+            <param name="mountPoint"><para>[optional]</para>
+            The mount point for the LDAP backend. Defaults to <see cref="F:VaultSharp.V1.AuthMethods.AuthMethodDefaultPaths.LDAP" />
+            Provide a value only if you have customized the mount point.</param>  
+        </member>
+        <member name="M:VaultSharp.V1.AuthMethods.LDAP.ILDAPAuthMethod.WriteUserAsync(System.String,System.Collections.Generic.IList{System.String},System.Collections.Generic.IList{System.String},System.String)">
+            <summary>
+            This endpoint creates or updates LDAP users policies and group associations.
+            </summary>
+            <param name="username"><para>[required]</para>
+            The name of the user
+            </param>
+            <param name="policies"><para>[required]</para>
+            List of policies associated to the user.
+            </param>
+            <param name="groups"><para>[required]</para>
+            List of groups associated to the user.
+            </param>
+            <param name="mountPoint"><para>[optional]</para>
+            The mount point for the LDAP backend. Defaults to <see cref="F:VaultSharp.V1.AuthMethods.AuthMethodDefaultPaths.LDAP" />
+            Provide a value only if you have customized the mount point.</param>        
+        </member>
+        <member name="M:VaultSharp.V1.AuthMethods.LDAP.ILDAPAuthMethod.ReadUserAsync(System.String,System.String,System.String)">
+            <summary>
+            This endpoint reads LDAP user.
+            </summary>
+            <param name="username"><para>[required]</para>
+            The name of user
+            </param>
+            <param name="mountPoint"><para>[optional]</para>
+            The mount point for the LDAP backend. Defaults to <see cref="F:VaultSharp.V1.AuthMethods.AuthMethodDefaultPaths.LDAP" />
+            Provide a value only if you have customized the mount point.</param>  
+            <param name="wrapTimeToLive">
+            <para>[optional]</para>
+            The TTL for the token and can be either an integer number of seconds or a string duration of seconds.
+            </param>
+            <returns>
+            The user.
+            </returns>
+        </member>
+        <member name="M:VaultSharp.V1.AuthMethods.LDAP.ILDAPAuthMethod.ReadAllUsersAsync(System.String,System.String)">
+            <summary>
+            This endpoint reads all LDAP users.
+            </summary>
+            <param name="mountPoint"><para>[optional]</para>
+            The mount point for the LDAP backend. Defaults to <see cref="F:VaultSharp.V1.AuthMethods.AuthMethodDefaultPaths.LDAP" />
+            Provide a value only if you have customized the mount point.</param>  
+            <param name="wrapTimeToLive">
+            <para>[optional]</para>
+            The TTL for the token and can be either an integer number of seconds or a string duration of seconds.
+            </param>
+            <returns>
+            The users.
+            </returns>
+        </member>
+        <member name="M:VaultSharp.V1.AuthMethods.LDAP.ILDAPAuthMethod.DeleteUserAsync(System.String,System.String)">
+            <summary>
+            This endpoint deletes the LDAP user.
+            </summary>
+            <param name="username"><para>[required]</para>
+            The name of the LDAP user
+            </param>
+            <param name="mountPoint"><para>[optional]</para>
+            The mount point for the LDAP backend. Defaults to <see cref="F:VaultSharp.V1.AuthMethods.AuthMethodDefaultPaths.LDAP" />
+            Provide a value only if you have customized the mount point.</param>  
+        </member>
+        <member name="T:VaultSharp.V1.AuthMethods.LDAP.LDAPAuthMethodInfo">
+            <summary>
+            Represents the login information for the LDAP Authentication backend.
+            </summary>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.LDAP.LDAPAuthMethodInfo.AuthMethodType">
+            <summary>
+            Gets the type of the authentication backend.
+            </summary>
+            <value>
+            The type of the authentication backend.
+            </value>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.LDAP.LDAPAuthMethodInfo.MountPoint">
+            <summary>
+            Gets the mount point.
+            Presence or absence of leading or trailing slashes don't matter.
+            </summary>
+            <value>
+            The mount point.
+            </value>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.LDAP.LDAPAuthMethodInfo.Username">
+            <summary>
+            Gets the username.
+            </summary>
+            <value>
+            The username.
+            </value>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.LDAP.LDAPAuthMethodInfo.Password">
+            <summary>
+            Gets the password.
+            </summary>
+            <value>
+            The password.
+            </value>
+        </member>
+        <member name="M:VaultSharp.V1.AuthMethods.LDAP.LDAPAuthMethodInfo.#ctor(System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:VaultSharp.V1.AuthMethods.LDAP.LDAPAuthMethodInfo"/> class.
+            </summary>
+            <param name="username">The username.</param>
+            <param name="password">The password.</param>
+        </member>
+        <member name="M:VaultSharp.V1.AuthMethods.LDAP.LDAPAuthMethodInfo.#ctor(System.String,System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:VaultSharp.V1.AuthMethods.LDAP.LDAPAuthMethodInfo"/> class.
+            </summary>
+            <param name="mountPoint">The mount point.</param>
+            <param name="username">The username.</param>
+            <param name="password">The password.</param>
+        </member>
+        <member name="T:VaultSharp.V1.AuthMethods.OCI.OCIAuthMethodInfo">
+            <summary>
+            Represents the login information for the OCI Authentication backend.
+            </summary>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.OCI.OCIAuthMethodInfo.AuthMethodType">
+            <summary>
+            Gets the type of the authentication backend.
+            </summary>
+            <value>
+            The type of the authentication backend.
+            </value>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.OCI.OCIAuthMethodInfo.MountPoint">
+            <summary>
+            Gets the mount point.
+            Presence or absence of leading or trailing slashes don't matter.
+            </summary>
+            <value>
+            The mount point.
+            </value>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.OCI.OCIAuthMethodInfo.RoleName">
+            <summary>
+            Gets the name of the role against which the login is being attempted.
+            </summary>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.OCI.OCIAuthMethodInfo.RequestHeaders">
+            <summary>
+            Gets the request headers.
+            </summary>
+        </member>
+        <member name="M:VaultSharp.V1.AuthMethods.OCI.OCIAuthMethodInfo.#ctor(System.String,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Initializes a new instance of the <see cref="T:VaultSharp.V1.AuthMethods.OCI.OCIAuthMethodInfo"/> class.
+            </summary>
+            <param name="rolename">The Name of the role against which the login is being attempted..</param>
+            <param name="requestHeaders">Signed request headers for authenticating. 
+            For details on signing, see https://docs.cloud.oracle.com/iaas/Content/API/Concepts/signingrequests.htm
+            </param>
+        </member>
+        <member name="M:VaultSharp.V1.AuthMethods.OCI.OCIAuthMethodInfo.#ctor(System.String,System.String,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Initializes a new instance of the <see cref="T:VaultSharp.V1.AuthMethods.OCI.OCIAuthMethodInfo"/> class.
+            </summary>
+            <param name="mountPoint">The mount point.</param>
+            <param name="rolename">The Name of the role against which the login is being attempted..</param>
+            <param name="requestHeaders">Signed request headers for authenticating. 
+            For details on signing, see https://docs.cloud.oracle.com/iaas/Content/API/Concepts/signingrequests.htm
+            </param>
+        </member>
+        <member name="T:VaultSharp.V1.AuthMethods.Okta.IOktaAuthMethod">
+            <summary>
+            Non login operations.
+            </summary>
+        </member>
+        <member name="M:VaultSharp.V1.AuthMethods.Okta.IOktaAuthMethod.VerifyPushChallengeAsync(System.String,System.String)">
+            <summary>
+            Verify a number challenge that may result from an Okta Verify Push challenge.
+            </summary>
+            <param name="nonce">
+            [required]
+            Nonce provided if performing login that requires number verification challenge. 
+            Logins through the vault login CLI command will automatically generate a nonce.
+            </param>
+            <param name="mountPoint">Mount point of the Okta Auth method</param>
+            <returns>Correct answer</returns>
+        </member>
+        <member name="T:VaultSharp.V1.AuthMethods.Okta.OktaAuthMethodInfo">
+            <summary>
+            Represents the login information for the Okta Authentication backend.
+            </summary>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.Okta.OktaAuthMethodInfo.AuthMethodType">
+            <summary>
+            Gets the type of the authentication backend.
+            </summary>
+            <value>
+            The type of the authentication backend.
+            </value>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.Okta.OktaAuthMethodInfo.MountPoint">
+            <summary>
+            Gets the mount point.
+            Presence or absence of leading or trailing slashes don't matter.
+            </summary>
+            <value>
+            The mount point.
+            </value>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.Okta.OktaAuthMethodInfo.Username">
+            <summary>
+            Gets the username.
+            </summary>
+            <value>
+            The username.
+            </value>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.Okta.OktaAuthMethodInfo.Password">
+            <summary>
+            Gets the password.
+            </summary>
+            <value>
+            The password.
+            </value>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.Okta.OktaAuthMethodInfo.TOTP">
+            <summary>
+            Gets the TOTP.
+            </summary>
+            <value>
+            The TOTP.
+            </value>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.Okta.OktaAuthMethodInfo.TOTPProvider">
+            <summary>
+            Gets the Provider.
+            </summary>
+            <value>
+            The Provider.
+            </value>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.Okta.OktaAuthMethodInfo.Nonce">
+            <summary>
+            Gets the Nonce.
+            </summary>
+            <value>
+            The Nonce.
+            </value>
+        </member>
+        <member name="M:VaultSharp.V1.AuthMethods.Okta.OktaAuthMethodInfo.#ctor(System.String,System.String,System.String,System.Nullable{VaultSharp.V1.AuthMethods.Okta.OktaTOTPProvider},System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:VaultSharp.V1.AuthMethods.Okta.OktaAuthMethodInfo"/> class.
+            </summary>
+            <param name="username">The username.</param>
+            <param name="password">The password.</param>
+            <param name="totp">The totp</param>
+            <param name="provider">The provider</param>
+            <param name="nonce">The nonce</param>
+        </member>
+        <member name="M:VaultSharp.V1.AuthMethods.Okta.OktaAuthMethodInfo.#ctor(System.String,System.String,System.String,System.String,System.Nullable{VaultSharp.V1.AuthMethods.Okta.OktaTOTPProvider},System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:VaultSharp.V1.AuthMethods.Okta.OktaAuthMethodInfo"/> class.
+            </summary>
+            <param name="mountPoint">The mount point.</param>
+            <param name="username">The username.</param>
+            <param name="password">The password.</param>
+            <param name="totp">The totp</param>
+            <param name="provider">The provider</param>
+            <param name="nonce">The nonce</param>
+        </member>
+        <member name="T:VaultSharp.V1.AuthMethods.Okta.OktaTOTPProvider">
+            <summary>
+            The OktaTOTPProvider
+            </summary>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.Okta.OktaVerifyPushChallengeResponse.CorrectAnswer">
+            <summary>
+            The correct push challenge answer
+            </summary>
+        </member>
+        <member name="T:VaultSharp.V1.AuthMethods.RADIUS.RADIUSAuthMethodInfo">
+            <summary>
+            Represents the login information for the RADIUS Authentication backend.
+            </summary>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.RADIUS.RADIUSAuthMethodInfo.AuthMethodType">
+            <summary>
+            Gets the type of the authentication backend.
+            </summary>
+            <value>
+            The type of the authentication backend.
+            </value>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.RADIUS.RADIUSAuthMethodInfo.MountPoint">
+            <summary>
+            Gets the mount point.
+            Presence or absence of leading or trailing slashes don't matter.
+            </summary>
+            <value>
+            The mount point.
+            </value>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.RADIUS.RADIUSAuthMethodInfo.Username">
+            <summary>
+            Gets the username.
+            </summary>
+            <value>
+            The username.
+            </value>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.RADIUS.RADIUSAuthMethodInfo.Password">
+            <summary>
+            Gets the password.
+            </summary>
+            <value>
+            The password.
+            </value>
+        </member>
+        <member name="M:VaultSharp.V1.AuthMethods.RADIUS.RADIUSAuthMethodInfo.#ctor(System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:VaultSharp.V1.AuthMethods.RADIUS.RADIUSAuthMethodInfo"/> class.
+            </summary>
+            <param name="username">The username.</param>
+            <param name="password">The password.</param>
+        </member>
+        <member name="M:VaultSharp.V1.AuthMethods.RADIUS.RADIUSAuthMethodInfo.#ctor(System.String,System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:VaultSharp.V1.AuthMethods.RADIUS.RADIUSAuthMethodInfo"/> class.
+            </summary>
+            <param name="mountPoint">The mount point.</param>
+            <param name="username">The username.</param>
+            <param name="password">The password.</param>
+        </member>
+        <member name="T:VaultSharp.V1.AuthMethods.Token.CreateTokenRequest">
+            <summary>
+            Token creation options.
+            </summary>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.Token.CreateTokenRequest.Id">
+            <summary>
+            The ID of the client token. 
+            Can only be specified by a root token. 
+            Otherwise, the token ID is a randomly generated value.
+            </summary>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.Token.CreateTokenRequest.RoleName">
+            <summary>
+            The name of the token role.
+            </summary>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.Token.CreateTokenRequest.Policies">
+            <summary>
+            A list of policies for the token. 
+            This must be a subset of the policies belonging to the token making the request, unless root. 
+            If not specified, defaults to all the policies of the calling token.
+            </summary>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.Token.CreateTokenRequest.Metadata">
+            <summary>
+            A map of string to string valued metadata. 
+            This is passed through to the audit devices.
+            </summary>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.Token.CreateTokenRequest.NoParent">
+            <summary>
+            When set to true, the token created will not have a parent.
+            </summary>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.Token.CreateTokenRequest.CreateOrphan">
+            <summary>
+            When set to true, the token will be created via create-orphan endpoint.
+            </summary>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.Token.CreateTokenRequest.NoDefaultPolicy">
+            <summary>
+            If true the default policy will not be contained in this token's policy set.
+            </summary>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.Token.CreateTokenRequest.Renewable">
+            <summary>
+            Set to false to disable the ability of the token to be renewed past its initial TTL. 
+            Setting the value to true will allow the token to be renewable up to the system/mount maximum TTL.
+            </summary>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.Token.CreateTokenRequest.TimeToLive">
+            <summary>
+            The TTL period of the token, provided as "1h", where hour is the largest suffix. 
+            If not provided, the token is valid for the default lease TTL, or indefinitely if the root policy is used.
+            </summary>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.Token.CreateTokenRequest.TokenType">
+            <summary>
+            The token type. Can be "batch" or "service". 
+            Defaults to the type specified by the role configuration named by role_name.
+            </summary>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.Token.CreateTokenRequest.ExplicitMaxTimeToLive">
+            <summary>
+             If set, the token will have an explicit max TTL set upon it. 
+             This maximum token TTL cannot be changed later, and unlike with normal tokens, 
+             updates to the system/mount max TTL value will have no effect at renewal time -- 
+             the token will never be able to be renewed or used past the value set at issue time.
+            </summary>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.Token.CreateTokenRequest.DisplayName">
+            <summary>
+            The display name of the token.
+            </summary>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.Token.CreateTokenRequest.NumberOfUses">
+            <summary>
+            The maximum uses for the given token. 
+            This can be used to create a one-time-token or limited use token. 
+            The value of 0 has no limit to the number of uses.
+            </summary>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.Token.CreateTokenRequest.Period">
+            <summary>
+            If specified, the token will be periodic; 
+            it will have no maximum TTL (unless an "explicit-max-ttl" is also set) 
+            but every renewal will use the given period. 
+            Requires a root token or one with the sudo capability.
+            </summary>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.Token.CreateTokenRequest.EntityAlias">
+            <summary>
+            Name of the entity alias to associate with during token creation. 
+            Only works in combination with role_name argument and used entity alias 
+            must be listed in allowed_entity_aliases. 
+            If this has been specified, the entity will not be inherited from the parent.
+            </summary>
+        </member>
+        <member name="T:VaultSharp.V1.AuthMethods.Token.CreateTokenRoleRequest">
+            <summary>
+            Request object to create a token role.
+            </summary>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.Token.CreateTokenRoleRequest.RoleName">
+            <summary>
+            Name of the token role.
+            </summary>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.Token.CreateTokenRoleRequest.Orphan">
+            <summary>
+            If true, tokens created against this policy will be orphan tokens 
+            (they will have no parent). As such, they will not be automatically
+            revoked by the revocation of any other token.
+            </summary>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.Token.CreateTokenRoleRequest.PathSuffix">
+            <summary>
+            If set, tokens created against this role will have the given suffix 
+            as part of their path in addition to the role name. This can be 
+            useful in certain scenarios, such as keeping the same role name in 
+            the future but revoking all tokens created against it before some 
+            point in time. The suffix can be changed, allowing new callers to have 
+            the new suffix as part of their path, and then tokens with the old 
+            suffix can be revoked via /sys/leases/revoke-prefix
+            </summary>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.Token.CreateTokenRoleRequest.Renewable">
+            <summary>
+            Set to false to disable the ability of the token to be renewed past
+            its initial TTL. Setting the value to true will allow the token to 
+            be renewable up to the system/mount maximum TTL.
+            </summary>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.Token.CreateTokenRoleRequest.TokenExplicitMaxTimeToLive">
+            <summary>
+            If set, will encode an explicit max TTL onto the token. This is a 
+            hard cap even if token_ttl and token_max_ttl would otherwise allow 
+            a renewal.
+            </summary>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.Token.CreateTokenRoleRequest.TokenNoDefaultPolicy">
+            <summary>
+            If set, the default policy will not be set on generated tokens; 
+            otherwise it will be added to the policies set in token_policies.
+            </summary>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.Token.CreateTokenRoleRequest.TokenPeriod">
+            <summary>
+            Period if anything is set on the token.
+            </summary>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.Token.CreateTokenRoleRequest.TokenType">
+            <summary>
+            The type of token to be generated. Can be one of service, batch or
+            default. For token store roles, there are two additional 
+            possibilities: default-service and default-batch which specify the 
+            type to return unless the client requests a different type at 
+            generation time.
+            </summary>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.Token.CreateTokenRoleRequest.AllowedEntityAliases">
+            <summary>
+            String or JSON list of allowed entity aliases. If set, specifies 
+            the entity aliases which are allowed to be used during token 
+            generation. This field supports globbing. 
+            Note that allowed_entity_aliases is not case sensitive.
+            </summary>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.Token.CreateTokenRoleRequest.AllowedPolcies">
+            <summary>
+             If set, tokens can be created with any subset of the policies in 
+             this list, rather than the normal semantics of tokens being a 
+             subset of the calling token's policies. The parameter is a 
+             comma-delimited string of policy names. If at creation time 
+             no_default_policy is not set and "default" is not contained in 
+             disallowed_policies or glob matched in disallowed_policies_glob, 
+             the "default" policy will be added to the created token 
+             automatically.
+            </summary>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.Token.CreateTokenRoleRequest.DisallowedPolcies">
+            <summary>
+            If set, successful token creation via this role will require that 
+            no policies in the given list are requested. The parameter is a 
+            comma-delimited string of policy names. Adding "default" to this 
+            list will prevent "default" from being added automatically to 
+            created tokens.
+            </summary>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.Token.CreateTokenRoleRequest.AllowedPolciesGlob">
+            <summary>
+            If set, tokens can be created with any subset of glob matched 
+            policies in this list, rather than the normal semantics of tokens 
+            being a subset of the calling token's policies. The parameter is a 
+            comma-delimited string of policy name globs. If at creation time 
+            no_default_policy is not set and "default" is not contained in 
+            disallowed_policies or glob matched in disallowed_policies_glob, 
+            the "default" policy will be added to the created token 
+            automatically. 
+            If combined with allowed_policies policies need to only match one 
+            of the two lists to be permitted. Note that unlike allowed_policies 
+            the policies listed in allowed_policies_glob will not be added to 
+            the token when no policies are specified in the call to 
+            /auth/token/create/:role_name.
+            </summary>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.Token.CreateTokenRoleRequest.DisallowedPolciesGlob">
+            <summary>
+            If set, successful token creation via this role will require that 
+            no requested policies glob match any of policies in this list. 
+            The parameter is a comma-delimited string of policy name globs. 
+            Adding any glob that matches "default" to this list will prevent 
+            "default" from being added automatically to created tokens. If 
+            combined with disallowed_policies policies need to only match one 
+            of the two lists to be blocked.
+            </summary>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.Token.CreateTokenRoleRequest.TokenBoundCidrs">
+            <summary>
+            List of CIDR blocks; if set, specifies blocks of IP addresses which 
+            can authenticate successfully, and ties the resulting token to these 
+            blocks as well.
+            </summary>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.Token.CreateTokenRoleRequest.TokenNumUses">
+            <summary>
+            The maximum number of times a generated token may be used 
+            (within its lifetime); 0 means unlimited. If you require the token 
+            to have the ability to create child tokens, you will need to set this 
+            value to 0.
+            </summary>
+        </member>
+        <member name="T:VaultSharp.V1.AuthMethods.Token.ITokenAuthMethod">
+            <summary>
+            Token Auth Method
+            </summary>
+        </member>
+        <member name="M:VaultSharp.V1.AuthMethods.Token.ITokenAuthMethod.CreateTokenAsync(VaultSharp.V1.AuthMethods.Token.CreateTokenRequest)">
+            <summary>
+            Creates a new token. 
+            Certain options are only available when called by a root token. 
+            If you are creating an orphaned token, a root token is not required to create an orphan token 
+            (otherwise set with the no_parent option). 
+            If used with a role name, the token will be created against the specified role name; 
+            this may override options set during this call.
+            </summary>
+            <param name="createTokenRequest">The token creation request</param>
+            <returns>Auth info</returns>
+        </member>
+        <member name="M:VaultSharp.V1.AuthMethods.Token.ITokenAuthMethod.LookupAsync(System.String)">
+            <summary>
+            Gets token information about the specified token.
+            </summary>
+            <param name="clientToken">The vault token to lookup</param>
+            <returns>
+            The secret with <see cref="T:VaultSharp.V1.AuthMethods.Token.Models.TokenInfo" />.
+            </returns>
+        </member>
+        <member name="M:VaultSharp.V1.AuthMethods.Token.ITokenAuthMethod.LookupSelfAsync">
+            <summary>
+            Gets the calling client token information. i.e. the token used by the client as part of this call.
+            </summary>
+            <returns>
+            The secret with <see cref="T:VaultSharp.V1.AuthMethods.Token.Models.CallingTokenInfo" />.
+            </returns>
+        </member>
+        <member name="M:VaultSharp.V1.AuthMethods.Token.ITokenAuthMethod.RenewSelfAsync(System.String)">
+            <summary>
+            Renews a lease associated with the calling token.
+            This is used to prevent the expiration of a token, and the automatic revocation of it.
+            Token renewal is possible only if there is a lease associated with it.
+            </summary>
+            <param name="increment"><para>[optional]</para>
+            An optional requested lease increment can be provided. This increment may be ignored.
+            </param>
+            <returns>
+            The auth info.
+            </returns>
+        </member>
+        <member name="M:VaultSharp.V1.AuthMethods.Token.ITokenAuthMethod.RevokeSelfAsync">
+            <summary>
+            Revokes the calling client token and all child tokens.
+            When the token is revoked, all secrets generated with it are also revoked.
+            </summary>
+            <returns>
+            The task.
+            </returns>
+        </member>
+        <member name="M:VaultSharp.V1.AuthMethods.Token.ITokenAuthMethod.CreateTokenRoleAsync(System.String,VaultSharp.V1.AuthMethods.Token.CreateTokenRoleRequest)">
+            <summary>
+            Create a token role.
+            </summary>
+            <param name="roleName">Name of the Token Role.</param>
+            <param name="createTokenRoleRequest">
+            Request object containing configurations for the token role.
+            </param>
+            <returns>No return value.</returns>
+        </member>
+        <member name="M:VaultSharp.V1.AuthMethods.Token.ITokenAuthMethod.ReadTokenRoleAsync(System.String)">
+            <summary>
+            Returns metadata of a token role.
+            </summary>
+            <param name="roleName">Token Role to be fetched.</param>
+            <returns>Metadata of requested token role.</returns>
+        </member>
+        <member name="M:VaultSharp.V1.AuthMethods.Token.ITokenAuthMethod.ListTokenRolesAsync">
+            <summary>
+            Lists the available token roles.
+            </summary>
+            <returns>Keys of available token roles.</returns>
+        </member>
+        <member name="M:VaultSharp.V1.AuthMethods.Token.ITokenAuthMethod.DeleteTokenRoleAsync(System.String)">
+            <summary>
+            Delete token role.
+            </summary>
+            <param name="roleName">Token role to be deleted.</param>
+            <returns>No return value.</returns>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.Token.ListTokenRoles.Keys">
+            <summary>
+            List of available token roles.
+            </summary>
+        </member>
+        <member name="T:VaultSharp.V1.AuthMethods.Token.Models.CallingTokenInfo">
+            <summary>
+            Represents the information associated with the calling token.
+            </summary>
+        </member>
+        <member name="T:VaultSharp.V1.AuthMethods.Token.Models.ClientTokenInfo">
+            <summary>
+            Represents the information associated with the client token.
+            </summary>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.Token.Models.ClientTokenInfo.Accessor">
+            <summary>
+            Gets or sets the accessor.
+            </summary>
+            <value>
+            The accessor.
+            </value>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.Token.Models.ClientTokenInfo.ExplicitMaximumTimeToLive">
+            <summary>
+            Gets or sets the explicit maximum time to live.
+            </summary>
+            <value>
+            The explicit maximum time to live.
+            </value>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.Token.Models.ClientTokenInfo.Renewable">
+            <summary>
+            Gets or sets a value indicating whether this <see cref="T:VaultSharp.V1.AuthMethods.Token.Models.CallingTokenInfo"/> is renewable.
+            </summary>
+            <value>
+              <c>true</c> if renewable; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="T:VaultSharp.V1.AuthMethods.Token.Models.TokenAccessorInfo">
+            <summary>
+            Represents the information associated with a token accessor.
+            </summary>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.Token.Models.TokenAccessorInfo.CreationTime">
+            <summary>
+            Gets or sets the creation time.
+            </summary>
+            <value>
+            The creation time.
+            </value>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.Token.Models.TokenAccessorInfo.CreationTimeToLive">
+            <summary>
+            Gets or sets the creation time to live.
+            </summary>
+            <value>
+            The creation time to live.
+            </value>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.Token.Models.TokenAccessorInfo.Orphan">
+            <summary>
+            Gets or sets a value indicating whether this <see cref="T:VaultSharp.V1.AuthMethods.Token.Models.TokenAccessorInfo"/> is orphan.
+            </summary>
+            <value>
+              <c>true</c> if orphan; otherwise, <c>false</c>.
+            </value>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.Token.Models.TokenAccessorInfo.TimeToLive">
+            <summary>
+            Gets or sets the time to live.
+            </summary>
+            <value>
+            The time to live.
+            </value>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.Token.Models.TokenAccessorInfo.Type">
+            <summary>
+            Gets or sets the type
+            </summary>
+            <value>
+            The type.
+            </value>
+        </member>
+        <member name="T:VaultSharp.V1.AuthMethods.Token.Models.TokenInfo">
+            <summary>
+            Represents the information associated with a token.
+            </summary>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.Token.Models.TokenInfo.Id">
+            <summary>
+            <para>[optional]</para>
+            Gets or sets the ID of the client token. Can only be specified by a root token. 
+            Otherwise, the token ID is a randomly generated UUID.
+            </summary>
+            <value>
+            The identifier.
+            </value>
+        </member>
+        <member name="P:VaultSharp.V1.AuthMethods.Token.Models.TokenInfo.Policies">
+            <summary>
+  
